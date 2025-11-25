@@ -76,7 +76,7 @@ public static class HtmlBuilderAttributeExtensions
             return htmlBuilder;
         }
 
-        internal HtmlBuilder WithAttributes(Dictionary<string, string> attributes)
+        public HtmlBuilder WithAttributes(Dictionary<string, string> attributes)
         {
             foreach (var v in attributes)
                 htmlBuilder.WithAttribute(v.Key, v.Value);
