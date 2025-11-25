@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\JJConsulting.Html\JJConsulting.Html.csproj" />
+      <ProjectReference Include="..\..\src\JJConsulting.Html\JJConsulting.Html.csproj" />
     </ItemGroup>
 
 </Project>
