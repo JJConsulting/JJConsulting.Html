@@ -175,6 +175,12 @@ public sealed class HtmlBuilder
 
     public bool TryGetAttribute(string key, out string? value) => _attributes.TryGetValue(key, out value);
 
+    public HtmlBuilder WithAttribute(string name)
+    {
+        _attributes[name] = name;
+        return this;
+    }
+
     public HtmlBuilder WithAttribute(string name, string? value)
     {
         _attributes[name] = value;
