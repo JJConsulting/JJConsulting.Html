@@ -19,14 +19,14 @@ public sealed class HtmlBuilder
     private readonly Dictionary<string, string?> _attributes;
     private readonly List<HtmlBuilder?> _children;
     private readonly HtmlBuilderTag? _tag;
-    
+
     private static readonly ObjectPool<StringBuilder> StringBuilderPool;
-    
+
     static HtmlBuilder()
     {
         StringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
     }
-    
+
     /// <summary>
     /// Initializes a new instance of the <see cref="HtmlBuilder"/> class.
     /// </summary>
@@ -54,7 +54,7 @@ public sealed class HtmlBuilder
     {
         _tag = new HtmlBuilderTag(tag);
     }
-    
+
     /// <summary>
     /// Renders the instance to a String
     /// </summary>
@@ -62,7 +62,7 @@ public sealed class HtmlBuilder
     {
         return ParseHtmlAsString(0);
     }
-    
+
     /// <summary>
     /// Gets current builder HTML.
     /// </summary>
@@ -76,9 +76,9 @@ public sealed class HtmlBuilder
     private string ParseHtmlAsString(int tabCount)
     {
         string html;
-        
+
         var htmlBuilder = StringBuilderPool.Get();
-        
+
         if (tabCount > 0 && !_hasRawText)
         {
             htmlBuilder.AppendLine().Append(' ', tabCount * 2);
@@ -92,12 +92,12 @@ public sealed class HtmlBuilder
             html = htmlBuilder.ToString();
 
             StringBuilderPool.Return(htmlBuilder);
-        
+
             return html;
         }
 
         var tagName = _tag.GetTagName();
-        
+
         htmlBuilder.Append('<');
         htmlBuilder.Append(tagName);
         htmlBuilder.Append(GetAttributesHtml());
@@ -105,11 +105,11 @@ public sealed class HtmlBuilder
         if (!_tag.HasClosingTag)
         {
             htmlBuilder.Append(" />");
-           
+
             html = htmlBuilder.ToString();
 
             StringBuilderPool.Return(htmlBuilder);
-        
+
             return html;
         }
 
@@ -122,11 +122,11 @@ public sealed class HtmlBuilder
         else
         {
             htmlBuilder.Append(GetHtmlContent(tabCount));
-            
+
             if (tabCount > 0 && !_hasRawText)
                 htmlBuilder.AppendLine().Append(' ', tabCount * 2);
         }
-       
+
         htmlBuilder.Append("</");
         htmlBuilder.Append(tagName);
         htmlBuilder.Append('>');
@@ -134,7 +134,7 @@ public sealed class HtmlBuilder
         html = htmlBuilder.ToString();
 
         StringBuilderPool.Return(htmlBuilder);
-        
+
         return html;
     }
 
@@ -148,8 +148,9 @@ public sealed class HtmlBuilder
         {
             contentBuilder.Append(child?.ParseHtmlAsString(tabCount));
         }
+
         var content = contentBuilder.ToString();
-        
+
         StringBuilderPool.Return(contentBuilder);
 
         return content;
@@ -162,29 +163,29 @@ public sealed class HtmlBuilder
         {
             attributesBuilder.Append($" {item.Key}=\"{HttpUtility.HtmlAttributeEncode(item.Value ?? "")}\"");
         }
-        
+
         var attributes = attributesBuilder.ToString();
-        
+
         StringBuilderPool.Return(attributesBuilder);
 
         return attributes;
     }
-    
+
     public string? GetAttribute(string key) => _attributes[key];
-    
+
     public bool TryGetAttribute(string key, out string? value) => _attributes.TryGetValue(key, out value);
-    
+
     public HtmlBuilder WithAttribute(string name, string? value)
     {
         _attributes[name] = value;
         return this;
     }
-    
+
     public HtmlBuilder Prepend(HtmlBuilder? builder)
     {
         if (builder == this)
             throw new InvalidOperationException("Cannot append the same HtmlBuilder to itself.");
-        
+
         if (builder != null)
             _children.Insert(0, builder);
 
@@ -195,7 +196,7 @@ public sealed class HtmlBuilder
     {
         if (builder == this)
             throw new InvalidOperationException("Cannot append the same HtmlBuilder to itself.");
-        
+
         if (builder != null)
             _children.Add(builder);
 

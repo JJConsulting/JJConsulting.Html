@@ -1,0 +1,25 @@
+<Project>
+	<PropertyGroup>
+		<PackageProjectUrl>https://www.github.com/JJConsulting/JJConsulting.Html</PackageProjectUrl>
+		<RepositoryUrl>https://www.github.com/JJConsulting/JJConsulting.Html</RepositoryUrl>
+		<Version>1.0.0</Version>
+		<Description>JJConsulting.Html provides a fluent, low-allocation, strongly typed API for constructing HTML.</Description>
+		<PackageVersion>$(Version)</PackageVersion>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<IncludeSymbols>true</IncludeSymbols>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<WarningsAsErrors>CA1859;CS4014</WarningsAsErrors>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Company>JJ Consulting</Company>
+		<Copyright>© 2025 JJConsulting. All rights reserved.</Copyright>
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Roslynator.Analyzers" Version="4.13.1" PrivateAssets="All"/>
+		<PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.13.1" PrivateAssets="All" />
+		<PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.13.1" PrivateAssets="All"/>
+	</ItemGroup>
+</Project>
+

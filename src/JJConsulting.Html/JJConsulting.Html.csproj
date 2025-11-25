@@ -4,6 +4,7 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
+        <Description>JJMasterData library to render JJMasterData's components.</Description>
     </PropertyGroup>
     
     <ItemGroup>

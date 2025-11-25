@@ -3,7 +3,7 @@
 namespace JJConsulting.Html;
 
 /// <summary>
-/// Represents a HTML tag of a <see cref="HtmlBuilder"/>
+/// Represents an HTML tag of a <see cref="HtmlBuilder"/>
 /// </summary>
 public sealed class HtmlBuilderTag(HtmlTag htmlTag)
 {

@@ -54,12 +54,12 @@ public static class HtmlBuilderAttributeExtensions
         {
             if (classes == null || string.IsNullOrWhiteSpace(classes))
                 return htmlBuilder;
-        
+
             if (!htmlBuilder.TryGetAttribute("class", out var existingClasses))
                 return htmlBuilder.WithAttribute("class", classes);
 
             var classSet = new HashSet<string>(existingClasses.Split(' '), StringComparer.InvariantCultureIgnoreCase);
-        
+
             foreach (var cssClass in classes.Split(' '))
                 classSet.Add(cssClass);
 
@@ -91,25 +91,25 @@ public static class HtmlBuilderAttributeExtensions
 
         public HtmlBuilder WithOnChange([LanguageInjection("JavaScript")] string value)
         {
-            htmlBuilder.WithAttribute("onchange",value);
+            htmlBuilder.WithAttribute("onchange", value);
             return htmlBuilder;
         }
 
         public HtmlBuilder WithOnClick([LanguageInjection("JavaScript")] string value)
         {
-            htmlBuilder.WithAttribute("onclick",value);
+            htmlBuilder.WithAttribute("onclick", value);
             return htmlBuilder;
         }
 
         public HtmlBuilder WithStyle(string value)
         {
-            htmlBuilder.WithAttribute("style",value);
+            htmlBuilder.WithAttribute("style", value);
             return htmlBuilder;
         }
 
         public HtmlBuilder WithHref(string link)
         {
-            htmlBuilder.WithAttribute("href",link);
+            htmlBuilder.WithAttribute("href", link);
             return htmlBuilder;
         }
     }

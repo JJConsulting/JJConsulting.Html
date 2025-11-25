@@ -1,4 +1,12 @@
 <Solution>
+  <Folder Name="/Eng/">
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Eng/GitHub/">
+    <File Path=".github/workflows/dotnet.yml" />
+    <File Path=".github/workflows/nuget.yml" />
+  </Folder>
   <Folder Name="/Tests/">
     <Project Path="test/JJConsulting.Html.Tests/JJConsulting.Html.Tests.csproj" />
   </Folder>
