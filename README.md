@@ -158,7 +158,7 @@ public static class HtmlBuilderExtensions
         
         public HtmlBuilder WithToolTip(string? tooltip)
         {
-            if (tooltip == null || string.IsNullOrEmpty(tooltip)) 
+            if (string.IsNullOrEmpty(tooltip)) 
                 return html;
             
             html.WithAttribute("title", tooltip);
