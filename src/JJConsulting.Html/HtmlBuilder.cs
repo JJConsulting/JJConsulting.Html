@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
-using Microsoft.Extensions.ObjectPool;
+using JJConsulting.Html.Utils;
 
 namespace JJConsulting.Html;
 
@@ -18,13 +17,8 @@ public sealed class HtmlBuilder
     private readonly List<HtmlBuilder?> _children;
     private readonly HtmlTag? _tag;
 
-    private static readonly ObjectPool<StringBuilder> StringBuilderPool;
 
-    static HtmlBuilder()
-    {
-        var provider = new DefaultObjectPoolProvider();
-        StringBuilderPool = provider.CreateStringBuilderPool();
-    }
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="HtmlBuilder"/> class.
@@ -61,7 +55,7 @@ public sealed class HtmlBuilder
 
     private string ToHtmlString(bool indented, int indentLevel = 0)
     {
-        var sb = StringBuilderPool.Get();
+        var sb = StringBuilderPool.Rent();
         var indent = indented ? new string(' ', indentLevel * 2) : string.Empty;
         var newline = indented ? "\n" : string.Empty;
 
@@ -81,7 +75,7 @@ public sealed class HtmlBuilder
             }
 
             var html = sb.ToString();
-            StringBuilderPool.Return(sb);
+            StringBuilderPool.Release(sb);
             return html;
         }
 
@@ -96,7 +90,7 @@ public sealed class HtmlBuilder
             sb.Append(" />");
             sb.Append(newline);
             var html = sb.ToString();
-            StringBuilderPool.Return(sb);
+            StringBuilderPool.Release(sb);
             return html;
         }
 
@@ -116,13 +110,13 @@ public sealed class HtmlBuilder
         sb.Append(newline);
 
         var result = sb.ToString();
-        StringBuilderPool.Return(sb);
+        StringBuilderPool.Release(sb);
         return result;
     }
 
     private string GetAttributesHtml()
     {
-        var attributesBuilder = StringBuilderPool.Get();
+        var attributesBuilder = StringBuilderPool.Rent();
         foreach (var item in _attributes)
         {
             attributesBuilder.Append($" {item.Key}=\"{WebUtility.HtmlEncode(item.Value ?? "")}\"");
@@ -130,7 +124,7 @@ public sealed class HtmlBuilder
 
         var attributes = attributesBuilder.ToString();
 
-        StringBuilderPool.Return(attributesBuilder);
+        StringBuilderPool.Release(attributesBuilder);
 
         return attributes;
     }
