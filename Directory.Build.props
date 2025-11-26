@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<PackageProjectUrl>https://www.github.com/JJConsulting/JJConsulting.Html</PackageProjectUrl>
 		<RepositoryUrl>https://www.github.com/JJConsulting/JJConsulting.Html</RepositoryUrl>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Description>JJConsulting.Html provides a fluent, low-allocation, strongly typed API for constructing HTML.</Description>
 		<PackageVersion>$(Version)</PackageVersion>
 		<AssemblyVersion>$(Version)</AssemblyVersion>

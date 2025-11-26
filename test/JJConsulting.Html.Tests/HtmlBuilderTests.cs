@@ -17,7 +17,7 @@ public class HtmlBuilderTests
         var result = builder.ToString();
         Assert.Equal("hello", result);
     }
-    
+
     [Fact]
     public void RawText_ShouldEncode()
     {
@@ -87,23 +87,13 @@ public class HtmlBuilderTests
     public void AppendRange_ShouldAppendAll()
     {
         var builder = new HtmlBuilder(HtmlTag.Div)
-            .AppendRange(new[]
-            {
+            .AppendRange([
                 new HtmlBuilder("x"),
                 new HtmlBuilder("y"),
                 new HtmlBuilder("z")
-            });
+            ]);
         var result = builder.ToString();
         Assert.Equal("<div>xyz</div>", result);
-    }
-
-    [Fact]
-    public void IndentedHtml_ShouldIndentChildren()
-    {
-        var builder = new HtmlBuilder(HtmlTag.Div)
-            .Append(new HtmlBuilder(HtmlTag.Span).Append(new HtmlBuilder("hi")));
-        var result = builder.ToString(true);
-        Assert.Contains(Environment.NewLine, result);
     }
 
     [Fact]
@@ -111,7 +101,7 @@ public class HtmlBuilderTests
     {
         var builder = new HtmlBuilder(HtmlTag.TextArea)
             .Append(new HtmlBuilder("line1\nline2"));
-        var result = builder.ToString(false);
+        var result = builder.ToString();
         Assert.Equal("<textarea>line1\nline2</textarea>", result);
     }
 
@@ -146,5 +136,45 @@ public class HtmlBuilderTests
     {
         var builder = new HtmlBuilder(HtmlTag.Div);
         Assert.Throws<InvalidOperationException>(() => builder.Prepend(builder));
+    }
+    
+    [Fact]
+    public void ToHtmlString_ShouldReturnIndentedHtml()
+    {
+        var builder = new HtmlBuilder(HtmlTag.Div)
+            .Append(new HtmlBuilder(HtmlTag.Span)
+                .Append(new HtmlBuilder("Hello")))
+            .Append(new HtmlBuilder(HtmlTag.P)
+                .Append(new HtmlBuilder("World")));
+
+        var expected = 
+            @"<div>
+  <span>
+    Hello
+  </span>
+  <p>
+    World
+  </p>
+</div>
+";
+
+        var actual = builder.ToString(true);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ToHtmlString_SelfClosingTagIndented()
+    {
+        var builder = new HtmlBuilder(HtmlTag.Img)
+            .WithAttribute("src", "image.png")
+            .WithAttribute("alt", "My Image");
+
+        var expected = @"<img src=""image.png"" alt=""My Image"" />
+";
+
+        var actual = builder.ToString(true);
+
+        Assert.Equal(expected, actual);
     }
 }

@@ -137,13 +137,29 @@ public static class HtmlBuilderChildrenExtensions
             input.WithAttribute("hidden", "hidden");
             input.WithNameAndId(name);
             input.WithValue(value);
-        
+
             return htmlBuilder.Append(input);
         }
 
         public HtmlBuilder AppendHiddenInput(string name)
         {
             return htmlBuilder.AppendHiddenInput(name, string.Empty);
+        }
+
+        public HtmlBuilder AppendStyle([LanguageInjection("css")] string rawCss)
+        {
+            var child = new HtmlBuilder(HtmlTag.Style)
+                .Append(new HtmlBuilder(rawCss, encode:false));
+
+            return htmlBuilder.Append(child);
+        }
+
+        public HtmlBuilder AppendStyleIf(bool condition, [LanguageInjection("css")] string rawCss)
+        {
+            if (!condition)
+                return htmlBuilder;
+
+            return htmlBuilder.AppendStyle(rawCss);
         }
 
         public HtmlBuilder AppendScript([LanguageInjection("javascript")] string rawScript)
@@ -159,7 +175,7 @@ public static class HtmlBuilderChildrenExtensions
         {
             if (!condition)
                 return htmlBuilder;
-            
+
             return htmlBuilder.AppendScript(rawScript);
         }
     }

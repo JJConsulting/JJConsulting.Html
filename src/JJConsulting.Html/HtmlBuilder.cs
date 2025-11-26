@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
-using System.Web;
 using Microsoft.Extensions.ObjectPool;
 
 namespace JJConsulting.Html;
 
 /// <summary>
-/// Represents a mutable string of HTML tags.
+/// A utility class for building HTML structures programmatically.
+/// Provides methods for creating, combining, and rendering HTML strings with nested elements, attributes,
+/// and raw text support.
 /// </summary>
-/// <example>
-/// [!include[Example](../../../doc/Documentation/articles/usages/htmlbuilder.md)]
-/// </example>
 public sealed class HtmlBuilder
 {
     private readonly string? _rawText;
-    private readonly bool _hasRawText;
     private readonly Dictionary<string, string?> _attributes;
     private readonly List<HtmlBuilder?> _children;
-    private readonly HtmlBuilderTag? _tag;
+    private readonly HtmlTag? _tag;
 
     private static readonly ObjectPool<StringBuilder> StringBuilderPool;
 
     static HtmlBuilder()
     {
-        StringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
+        var provider = new DefaultObjectPoolProvider();
+        StringBuilderPool = provider.CreateStringBuilderPool();
     }
 
     /// <summary>
@@ -36,124 +35,89 @@ public sealed class HtmlBuilder
         _children = [];
     }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="HtmlBuilder"/> class.
-    /// </summary>
+    /// <inheritdoc/>
     /// <param name="rawText"></param>
     /// <param name="encode"></param>
     public HtmlBuilder(string rawText, bool encode = true) : this()
     {
-        _rawText = encode ? HttpUtility.HtmlEncode(rawText) : rawText;
-        _hasRawText = true;
+        _rawText = encode ? WebUtility.HtmlEncode(rawText) : rawText;
     }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="HtmlBuilder"/> class.
-    /// </summary>
+    /// <inheritdoc/>
+    /// <param name="tag"></param>
     public HtmlBuilder(HtmlTag tag) : this()
     {
-        _tag = new HtmlBuilderTag(tag);
+        _tag = tag;
     }
-
-    /// <summary>
-    /// Renders the instance to a String
-    /// </summary>
     public override string ToString()
     {
-        return ParseHtmlAsString(0);
+        return ToHtmlString(false);
     }
 
-    /// <summary>
-    /// Gets current builder HTML.
-    /// </summary>
-    /// <param name="indentHtml">Generate html with indentation if true.</param>
-    public string ToString(bool indentHtml)
+    public string ToString(bool indented = false)
     {
-        var tabCount = indentHtml ? 1 : 0;
-        return ParseHtmlAsString(tabCount);
+        return ToHtmlString(indented);
     }
 
-    private string ParseHtmlAsString(int tabCount)
+    private string ToHtmlString(bool indented, int indentLevel = 0)
     {
-        string html;
+        var sb = StringBuilderPool.Get();
+        var indent = indented ? new string(' ', indentLevel * 2) : string.Empty;
+        var newline = indented ? "\n" : string.Empty;
 
-        var htmlBuilder = StringBuilderPool.Get();
-
-        if (tabCount > 0 && !_hasRawText)
+        if (!_tag.HasValue)
         {
-            htmlBuilder.AppendLine().Append(' ', tabCount * 2);
-        }
+            if (_rawText != null)
+            {
+                sb.Append(indent);
+                sb.Append(_rawText);
+                sb.Append(newline);
+            }
 
-        if (_hasRawText || _tag is null)
-        {
-            htmlBuilder.Append(_rawText);
-            htmlBuilder.Append(GetHtmlContent(tabCount));
+            foreach (var child in _children)
+            {
+                if (child != null)
+                    sb.Append(child.ToHtmlString(indented, indentLevel));
+            }
 
-            html = htmlBuilder.ToString();
-
-            StringBuilderPool.Return(htmlBuilder);
-
+            var html = sb.ToString();
+            StringBuilderPool.Return(sb);
             return html;
         }
 
-        var tagName = _tag.GetTagName();
+        var tagName = _tag.Value.Name;
+        sb.Append(indent);
+        sb.Append('<');
+        sb.Append(tagName);
+        sb.Append(GetAttributesHtml());
 
-        htmlBuilder.Append('<');
-        htmlBuilder.Append(tagName);
-        htmlBuilder.Append(GetAttributesHtml());
-
-        if (!_tag.HasClosingTag)
+        if (!_tag.Value.HasClosingTag)
         {
-            htmlBuilder.Append(" />");
-
-            html = htmlBuilder.ToString();
-
-            StringBuilderPool.Return(htmlBuilder);
-
+            sb.Append(" />");
+            sb.Append(newline);
+            var html = sb.ToString();
+            StringBuilderPool.Return(sb);
             return html;
         }
 
-        htmlBuilder.Append('>');
+        sb.Append('>');
+        sb.Append(newline);
 
-        if (_tag.HtmlTag is HtmlTag.TextArea)
-        {
-            htmlBuilder.Append(GetHtmlContent(0));
-        }
-        else
-        {
-            htmlBuilder.Append(GetHtmlContent(tabCount));
-
-            if (tabCount > 0 && !_hasRawText)
-                htmlBuilder.AppendLine().Append(' ', tabCount * 2);
-        }
-
-        htmlBuilder.Append("</");
-        htmlBuilder.Append(tagName);
-        htmlBuilder.Append('>');
-
-        html = htmlBuilder.ToString();
-
-        StringBuilderPool.Return(htmlBuilder);
-
-        return html;
-    }
-
-    private string GetHtmlContent(int tabCount)
-    {
-        if (tabCount > 0)
-            tabCount++;
-
-        var contentBuilder = StringBuilderPool.Get();
         foreach (var child in _children)
         {
-            contentBuilder.Append(child?.ParseHtmlAsString(tabCount));
+            if (child != null)
+                sb.Append(child.ToHtmlString(indented, indentLevel + 1));
         }
 
-        var content = contentBuilder.ToString();
+        sb.Append(indent);
+        sb.Append("</");
+        sb.Append(tagName);
+        sb.Append('>');
+        sb.Append(newline);
 
-        StringBuilderPool.Return(contentBuilder);
-
-        return content;
+        var result = sb.ToString();
+        StringBuilderPool.Return(sb);
+        return result;
     }
 
     private string GetAttributesHtml()
@@ -161,7 +125,7 @@ public sealed class HtmlBuilder
         var attributesBuilder = StringBuilderPool.Get();
         foreach (var item in _attributes)
         {
-            attributesBuilder.Append($" {item.Key}=\"{HttpUtility.HtmlAttributeEncode(item.Value ?? "")}\"");
+            attributesBuilder.Append($" {item.Key}=\"{WebUtility.HtmlEncode(item.Value ?? "")}\"");
         }
 
         var attributes = attributesBuilder.ToString();
@@ -189,8 +153,8 @@ public sealed class HtmlBuilder
 
     public HtmlBuilder Prepend(HtmlBuilder? builder)
     {
-        if (builder == this)
-            throw new InvalidOperationException("Cannot append the same HtmlBuilder to itself.");
+        if (ReferenceEquals(this, builder))
+            throw new InvalidOperationException("Cannot prepend the same HtmlBuilder instance to itself.");
 
         if (builder != null)
             _children.Insert(0, builder);
@@ -200,8 +164,8 @@ public sealed class HtmlBuilder
 
     public HtmlBuilder Append(HtmlBuilder? builder)
     {
-        if (builder == this)
-            throw new InvalidOperationException("Cannot append the same HtmlBuilder to itself.");
+        if (ReferenceEquals(this, builder))
+            throw new InvalidOperationException("Cannot append the same HtmlBuilder instance to itself.");
 
         if (builder != null)
             _children.Add(builder);
@@ -212,7 +176,15 @@ public sealed class HtmlBuilder
     public HtmlBuilder AppendRange(IEnumerable<HtmlBuilder> htmlEnumerable)
     {
         _children.AddRange(htmlEnumerable);
-
         return this;
+    }
+
+    /// <summary>
+    /// Clears all attributes and child elements from the current HtmlBuilder instance.
+    /// </summary>
+    public void Clear()
+    {
+        _attributes.Clear();
+        _children.Clear();
     }
 }

@@ -57,7 +57,7 @@ public class HtmlBuilderChildrenExtensionsTests
 
         Assert.Equal("<div>abc</div>", html.ToString());
     }
-    
+
     [Fact]
     public void AppendText_ShouldAddTextEncoded()
     {
