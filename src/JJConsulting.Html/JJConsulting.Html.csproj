@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
-        <Description>JJMasterData library to render JJMasterData's components.</Description>
+        <Description>JJConsulting.Html provides a fluent, low-allocation, strongly typed API for constructing HTML.</Description>
     </PropertyGroup>
     
     <ItemGroup>
