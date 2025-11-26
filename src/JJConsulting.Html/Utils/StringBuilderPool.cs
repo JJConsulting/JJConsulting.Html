@@ -19,36 +19,28 @@ internal static class StringBuilderPool
     private const int MaximumCapacity = 40000;
     private static readonly TimeSpan MaximumLifetime = TimeSpan.FromMinutes(10.0);
 
-    [field: ThreadStatic]
-    public static bool IsEnabled { get; set; }
-
     public static StringBuilder Rent()
     {
-        if (!IsEnabled)
-        {
-            return new StringBuilder(MinimumCapacity);
-        }
-
         var lifetime = DateTimeOffset.Now - _created;
         var expired = lifetime > MaximumLifetime;
 
-        if (!expired && _instance != null)
-        {
-            var sb = _instance;
-            _instance = null;
-            sb.Clear();
-            return sb;
-        }
+        if (expired || _instance == null)
+            return new StringBuilder(MinimumCapacity);
 
-        return new StringBuilder(MinimumCapacity);
+        var sb = _instance;
+        _instance = null;
+
+        sb.Clear();
+
+        return sb;
     }
 
     public static void Release(StringBuilder sb)
     {
-        if (sb.Capacity <= MaximumCapacity)
-        {
-            _instance = sb;
-            _created = DateTimeOffset.Now;
-        }
+        if (sb.Capacity > MaximumCapacity)
+            return;
+
+        _instance = sb;
+        _created = DateTimeOffset.Now;
     }
 }
