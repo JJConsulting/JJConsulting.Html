@@ -17,9 +17,6 @@ public sealed class HtmlBuilder
     private readonly List<HtmlBuilder?> _children;
     private readonly HtmlTag? _tag;
 
-
-
-
     /// <summary>
     /// Initializes a new instance of the <see cref="HtmlBuilder"/> class.
     /// </summary>
@@ -119,7 +116,10 @@ public sealed class HtmlBuilder
         var attributesBuilder = StringBuilderPool.Rent();
         foreach (var item in _attributes)
         {
-            attributesBuilder.Append($" {item.Key}=\"{WebUtility.HtmlEncode(item.Value ?? "")}\"");
+            var key = WebUtility.HtmlEncode(item.Key);
+            var value = WebUtility.HtmlEncode(item.Value ?? "");
+
+            attributesBuilder.Append($" {key}=\"{value}\"");
         }
 
         var attributes = attributesBuilder.ToString();

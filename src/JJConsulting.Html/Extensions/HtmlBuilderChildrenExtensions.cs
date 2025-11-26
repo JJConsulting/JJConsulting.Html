@@ -4,8 +4,6 @@ using JetBrains.Annotations;
 
 namespace JJConsulting.Html.Extensions;
 
-#nullable enable
-
 [PublicAPI]
 public static class HtmlBuilderChildrenExtensions
 {
@@ -20,8 +18,8 @@ public static class HtmlBuilderChildrenExtensions
         }
 
         public HtmlBuilder Append<TState>(HtmlTag tag,
-            TState state,
-            [InstantHandle, RequireStaticDelegate] Action<TState, HtmlBuilder> builderAction)
+            TState? state,
+            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
         {
             var child = new HtmlBuilder(tag);
             builderAction(state, child);
@@ -34,8 +32,8 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder.Append(HtmlTag.Div, builderAction);
         }
 
-        public HtmlBuilder AppendDiv<TState>(TState state,
-            [InstantHandle, RequireStaticDelegate] Action<TState, HtmlBuilder> builderAction)
+        public HtmlBuilder AppendDiv<TState>(TState? state,
+            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
         {
             return htmlBuilder.Append(HtmlTag.Div, state, builderAction);
         }
@@ -45,8 +43,8 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder.Append(HtmlTag.Span, builderAction);
         }
 
-        public HtmlBuilder AppendSpan<TState>(TState state,
-            [InstantHandle, RequireStaticDelegate] Action<TState, HtmlBuilder> builderAction)
+        public HtmlBuilder AppendSpan<TState>(TState? state,
+            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
         {
             return htmlBuilder.Append(HtmlTag.Span, state, builderAction);
         }
@@ -56,8 +54,8 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder.Append(HtmlTag.Input, builderAction);
         }
 
-        public HtmlBuilder AppendInput<TState>(TState state,
-            [InstantHandle, RequireStaticDelegate] Action<TState, HtmlBuilder> builderAction)
+        public HtmlBuilder AppendInput<TState>(TState? state,
+            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
         {
             return htmlBuilder.Append(HtmlTag.Input, state, builderAction);
         }
@@ -67,8 +65,8 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder.Append(HtmlTag.Label, builderAction);
         }
 
-        public HtmlBuilder AppendLabel<TState>(TState state,
-            [InstantHandle, RequireStaticDelegate] Action<TState, HtmlBuilder> builderAction)
+        public HtmlBuilder AppendLabel<TState>(TState? state,
+            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
         {
             return htmlBuilder.Append(HtmlTag.Label, state, builderAction);
         }
