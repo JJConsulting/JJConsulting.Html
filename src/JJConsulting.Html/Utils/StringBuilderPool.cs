@@ -13,7 +13,7 @@ internal static class StringBuilderPool
     private static StringBuilder? _instance;
 
     [ThreadStatic]
-    private static DateTimeOffset _created;
+    private static DateTime _created;
 
     private const int MinimumCapacity = 5000;
     private const int MaximumCapacity = 40000;
@@ -21,7 +21,7 @@ internal static class StringBuilderPool
 
     public static StringBuilder Rent()
     {
-        var lifetime = DateTimeOffset.Now - _created;
+        var lifetime = DateTime.UtcNow - _created;
         var expired = lifetime > MaximumLifetime;
 
         if (expired || _instance == null)
@@ -41,6 +41,6 @@ internal static class StringBuilderPool
             return;
 
         _instance = sb;
-        _created = DateTimeOffset.Now;
+        _created = DateTime.UtcNow;
     }
 }
