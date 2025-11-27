@@ -119,6 +119,8 @@ Produces:
 <script type="text/javascript">alert('Hello');</script>
 ```
 
+⚠️ Never trust user-provided input in this method and other overloads that don't encode HTML like `AppendStyle`.
+
 ---
 
 ## Full Example
