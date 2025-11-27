@@ -16,6 +16,17 @@ It is suitable for scenarios where a templating engine is not desirable, and whe
 
 ---
 
+## Use Cases
+
+* Generating HTML fragments programmatically in backend code
+* Creating ASP.NET Core [Tag Helpers](https://learn.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro?view=aspnetcore-10.0)
+* Creating reusable UI builders without Razor, like in [JJMasterData](https://www.github.com/jjconsulting/jjmasterdata).
+* HTML emails or templated documents
+* Automated content generators and utilities
+* High-performance scenarios where templating engines are too heavy
+
+---
+
 ## Installation
 
 ```
@@ -129,18 +140,6 @@ var page =
         .AppendScript("console.log('Page loaded');")
         .ToString(true);
 ```
-
----
-
-## Use Cases
-
-* Generating HTML fragments programmatically in backend code
-* Creating reusable UI builders without Razor, like in [JJMasterData](https://www.github.com/jjconsulting/jjmasterdata).
-* HTML emails or templated documents
-* Automated content generators and utilities
-* High-performance scenarios where templating engines are too heavy
-
----
 
 ## Alternative DSL
 
