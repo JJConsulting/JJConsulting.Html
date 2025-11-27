@@ -2,8 +2,8 @@
 
 public readonly struct HtmlTag
 {
-    public string Name { get; }
-    public bool HasClosingTag { get; }
+    public readonly string Name;
+    public readonly bool HasClosingTag;
 
     private HtmlTag(string name, bool hasClosingTag = true)
     {

@@ -11,8 +11,8 @@ It is suitable for scenarios where a templating engine is not desirable, and whe
 * Attribute helpers with conditional logic
 * HTML encoding for text and attribute values
 * Indented or compact output
-* Low allocations through `ObjectPool<StringBuilder>`
-* Common element helpers: `Div`, `Span`, `Input`, `Label`, `A`, `Br`, `Hr`
+* Low allocations through `StringBuilder` pooling
+* Common element helpers: `Div`, `Span`, `Input`, `Label`, `A`, `Br`, `Hr` powered by source generators
 
 ---
 
@@ -142,6 +142,67 @@ var page =
 
 ---
 
+## Alternative DSL
+
+In addition to the fluent `HtmlBuilder` API, the library also provides an optional **declarative DSL** based on static extension methods such as `Div(...)`, `Span(...)`, `H1(...)`, `P(...)`, etc.
+These helpers let you compose HTML trees using nested expressions instead of chained fluent calls.
+It's directly inspired by [Giraffe](https://github.com/giraffe-fsharp/Giraffe.ViewEngine).
+
+### Example
+
+```csharp
+using static JJConsulting.Html.Extensions.HtmlBuilderTagExtensions;
+
+var html =
+    Div(
+        H1("Welcome"),
+        P("This is a compact DSL."),
+        Ul(
+            Li("One"),
+            Li("Two"),
+            Li("Three")
+        )
+    ).ToString(true);
+```
+
+Produces:
+
+```html
+<div>
+  <h1>Welcome</h1>
+  <p>This is a compact DSL.</p>
+  <ul>
+    <li>One</li>
+    <li>Two</li>
+    <li>Three</li>
+  </ul>
+</div>
+```
+
+### When to Use the DSL
+
+This style is ideal when:
+
+* You prefer expression-based UI construction
+* You want a clean declarative style similar to JSX, XML literals, or Razor Components
+* You want minimal syntax noise while preserving strong typing
+
+### Mixed Use
+
+The DSL and the fluent API are fully interoperable:
+
+```csharp
+var block =
+    Div(
+        H2("Title"),
+        Div().WithCssClass("box").AppendText("Inside")
+    );
+```
+
+This allows you to use fluent attribute/child configuration while still benefiting from expressive tag factories.
+
+---
+
 ## Extending the Library
 
 Using the new C# 14 [extension members](https://devblogs.microsoft.com/dotnet/csharp-exploring-extension-members/), you can easily extend `HtmlBuilder`.
@@ -162,7 +223,7 @@ public static class HtmlBuilderExtensions
                 return html;
             
             html.WithAttribute("title", tooltip);
-            html.WithData("tooltip");
+            html.WithData("toogle", "tooltip");
 
             return html;
         }

@@ -56,7 +56,7 @@ public static class HtmlBuilderAttributeExtensions
             if (!htmlBuilder.TryGetAttribute("class", out var existingClasses))
                 return htmlBuilder.WithAttribute("class", classes);
 
-            var classSet = new HashSet<string>(existingClasses.Split(' '), StringComparer.InvariantCultureIgnoreCase);
+            var classSet = new HashSet<string>(existingClasses?.Split(' ') ?? [], StringComparer.InvariantCultureIgnoreCase);
 
             foreach (var cssClass in classes.Split(' '))
                 classSet.Add(cssClass);

@@ -2,7 +2,7 @@ using System;
 
 namespace JJConsulting.Html.Extensions;
 
-public static class HtmlBuilderChildrenExtensions
+public static partial class HtmlBuilderAppendExtensions
 {
     extension(HtmlBuilder htmlBuilder)
     {
@@ -11,51 +11,6 @@ public static class HtmlBuilderChildrenExtensions
             var child = new HtmlBuilder(tag);
             builderAction?.Invoke(child);
             htmlBuilder.Append(child);
-            return htmlBuilder;
-        }
-
-        public HtmlBuilder AppendDiv(Action<HtmlBuilder>? builderAction = null)
-        {
-            return htmlBuilder.Append(HtmlTag.Div, builderAction);
-        }
-
-
-        public HtmlBuilder AppendSpan(Action<HtmlBuilder>? builderAction = null)
-        {
-            return htmlBuilder.Append(HtmlTag.Span, builderAction);
-        }
-
-        public HtmlBuilder AppendInput(Action<HtmlBuilder>? builderAction = null)
-        {
-            return htmlBuilder.Append(HtmlTag.Input, builderAction);
-        }
-
-        public HtmlBuilder AppendLabel(Action<HtmlBuilder>? builderAction = null)
-        {
-            return htmlBuilder.Append(HtmlTag.Label, builderAction);
-        }
-
-
-        public HtmlBuilder AppendHr()
-        {
-            return htmlBuilder.Append(HtmlTag.Hr);
-        }
-
-        public HtmlBuilder AppendBr()
-        {
-            var child = new HtmlBuilder(HtmlTag.Br);
-            htmlBuilder.Append(child);
-            return htmlBuilder;
-        }
-
-        public HtmlBuilder AppendLink(string text, string link)
-        {
-            var child = new HtmlBuilder(HtmlTag.A)
-                .AppendText(text)
-                .WithAttribute("href", link);
-
-            htmlBuilder.Append(child);
-
             return htmlBuilder;
         }
 

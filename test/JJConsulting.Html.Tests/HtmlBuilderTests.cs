@@ -147,16 +147,17 @@ public class HtmlBuilderTests
             .Append(new HtmlBuilder(HtmlTag.P)
                 .Append(new HtmlBuilder("World")));
 
-        var expected = 
-            @"<div>
-  <span>
-    Hello
-  </span>
-  <p>
-    World
-  </p>
-</div>
-";
+        const string expected = """
+                                <div>
+                                  <span>
+                                    Hello
+                                  </span>
+                                  <p>
+                                    World
+                                  </p>
+                                </div>
+
+                                """;
 
         var actual = builder.ToString(true);
 
@@ -170,8 +171,10 @@ public class HtmlBuilderTests
             .WithAttribute("src", "image.png")
             .WithAttribute("alt", "My Image");
 
-        var expected = @"<img src=""image.png"" alt=""My Image"" />
-";
+        const string expected = """
+                       <img src="image.png" alt="My Image" />
+
+                       """;
 
         var actual = builder.ToString(true);
 

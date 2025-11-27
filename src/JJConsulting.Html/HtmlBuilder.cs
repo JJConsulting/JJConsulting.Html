@@ -40,6 +40,18 @@ public sealed class HtmlBuilder
     {
         _tag = tag;
     }
+
+    public HtmlBuilder(HtmlTag tag, string rawText) : this()
+    {
+        _tag = tag;
+        _children = [new HtmlBuilder(rawText)];
+    }
+
+    public HtmlBuilder(HtmlTag tag, params List<HtmlBuilder?> children) : this(tag)
+    {
+        _children = children;
+    }
+
     public override string ToString()
     {
         return ToHtmlString(false);

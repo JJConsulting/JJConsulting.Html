@@ -2,13 +2,13 @@ using JJConsulting.Html.Extensions;
 
 namespace JJConsulting.Html.Tests;
 
-public class HtmlBuilderChildrenExtensionsTests
+public class HtmlBuilderAppendExtensionsTests
 {
     [Fact]
     public void AppendTag_ShouldAppendChild()
     {
         var html = new HtmlBuilder(HtmlTag.Div)
-            .Append(HtmlTag.Span, h => h.AppendText("x"));
+            .Append(HtmlTag.Span, span => span.AppendText("x"));
 
         Assert.Equal("<div><span>x</span></div>", html.ToString());
     }
@@ -89,8 +89,26 @@ public class HtmlBuilderChildrenExtensionsTests
     public void AppendScript_ShouldRenderScriptContent()
     {
         var html = new HtmlBuilder(HtmlTag.Div)
-            .AppendScript("alert('x');");
+            .AppendScript("alert('<x>');");
 
-        Assert.Equal("<div><script type=\"text/javascript\">alert('x');</script></div>", html.ToString());
+        Assert.Equal("<div><script type=\"text/javascript\">alert('<x>');</script></div>", html.ToString());
+    }
+    
+    [Fact]
+    public void Append_MultipleNestedTags_ShouldRenderDeepHierarchy()
+    {
+        var html = HtmlBuilder.Div()
+            .AppendSection(section =>
+            {
+                section.AppendArticle(article =>
+                {
+                    article.AppendSpan(span =>
+                    {
+                        span.AppendText("deep");
+                    });
+                });
+            });
+
+        Assert.Equal("<div><section><article><span>deep</span></article></section></div>", html.ToString());
     }
 }

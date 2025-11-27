@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
         <Description>JJConsulting.Html provides a fluent, low-allocation, strongly typed API for constructing HTML.</Description>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JJConsulting.Html.SourceGenerators\JJConsulting.Html.SourceGenerators\JJConsulting.Html.SourceGenerators.csproj" OutputItemType="Analyzer"
+                        ReferenceOutputAssembly="false"  />
+    </ItemGroup>
 </Project>

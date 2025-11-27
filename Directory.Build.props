@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<PackageProjectUrl>https://www.github.com/JJConsulting/JJConsulting.Html</PackageProjectUrl>
 		<RepositoryUrl>https://www.github.com/JJConsulting/JJConsulting.Html</RepositoryUrl>
-		<Version>1.0.4</Version>
+		<Version>1.0.5</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<FileVersion>$(Version)</FileVersion>
