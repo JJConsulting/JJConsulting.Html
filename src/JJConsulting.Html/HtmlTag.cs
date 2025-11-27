@@ -1,8 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿namespace JJConsulting.Html;
 
-namespace JJConsulting.Html;
-
-[PublicAPI]
 public readonly struct HtmlTag
 {
     public string Name { get; }

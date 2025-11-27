@@ -1,15 +1,12 @@
 using System;
-using System.Web;
-using JetBrains.Annotations;
 
 namespace JJConsulting.Html.Extensions;
 
-[PublicAPI]
 public static class HtmlBuilderChildrenExtensions
 {
     extension(HtmlBuilder htmlBuilder)
     {
-        public HtmlBuilder Append(HtmlTag tag, [InstantHandle] Action<HtmlBuilder>? builderAction = null)
+        public HtmlBuilder Append(HtmlTag tag, Action<HtmlBuilder>? builderAction = null)
         {
             var child = new HtmlBuilder(tag);
             builderAction?.Invoke(child);
@@ -17,59 +14,27 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder;
         }
 
-        public HtmlBuilder Append<TState>(HtmlTag tag,
-            TState? state,
-            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
-        {
-            var child = new HtmlBuilder(tag);
-            builderAction(state, child);
-            htmlBuilder.Append(child);
-            return htmlBuilder;
-        }
-
-        public HtmlBuilder AppendDiv([InstantHandle] Action<HtmlBuilder>? builderAction = null)
+        public HtmlBuilder AppendDiv(Action<HtmlBuilder>? builderAction = null)
         {
             return htmlBuilder.Append(HtmlTag.Div, builderAction);
         }
 
-        public HtmlBuilder AppendDiv<TState>(TState? state,
-            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
-        {
-            return htmlBuilder.Append(HtmlTag.Div, state, builderAction);
-        }
 
-        public HtmlBuilder AppendSpan([InstantHandle] Action<HtmlBuilder>? builderAction = null)
+        public HtmlBuilder AppendSpan(Action<HtmlBuilder>? builderAction = null)
         {
             return htmlBuilder.Append(HtmlTag.Span, builderAction);
         }
 
-        public HtmlBuilder AppendSpan<TState>(TState? state,
-            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
-        {
-            return htmlBuilder.Append(HtmlTag.Span, state, builderAction);
-        }
-
-        public HtmlBuilder AppendInput([InstantHandle] Action<HtmlBuilder>? builderAction = null)
+        public HtmlBuilder AppendInput(Action<HtmlBuilder>? builderAction = null)
         {
             return htmlBuilder.Append(HtmlTag.Input, builderAction);
         }
 
-        public HtmlBuilder AppendInput<TState>(TState? state,
-            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
-        {
-            return htmlBuilder.Append(HtmlTag.Input, state, builderAction);
-        }
-
-        public HtmlBuilder AppendLabel([InstantHandle] Action<HtmlBuilder>? builderAction = null)
+        public HtmlBuilder AppendLabel(Action<HtmlBuilder>? builderAction = null)
         {
             return htmlBuilder.Append(HtmlTag.Label, builderAction);
         }
 
-        public HtmlBuilder AppendLabel<TState>(TState? state,
-            [InstantHandle, RequireStaticDelegate] Action<TState?, HtmlBuilder> builderAction)
-        {
-            return htmlBuilder.Append(HtmlTag.Label, state, builderAction);
-        }
 
         public HtmlBuilder AppendHr()
         {
@@ -94,7 +59,7 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder;
         }
 
-        public HtmlBuilder AppendIf(bool condition, [InstantHandle] Func<HtmlBuilder> func)
+        public HtmlBuilder AppendIf(bool condition, Func<HtmlBuilder> func)
         {
             if (condition)
                 htmlBuilder.Append(func.Invoke());
@@ -102,7 +67,7 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder;
         }
 
-        public HtmlBuilder AppendIf(bool condition, HtmlTag tag, [InstantHandle] Action<HtmlBuilder>? builderAction = null)
+        public HtmlBuilder AppendIf(bool condition, HtmlTag tag, Action<HtmlBuilder>? builderAction = null)
         {
             if (condition)
                 htmlBuilder.Append(tag, builderAction);
@@ -144,15 +109,15 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder.AppendHiddenInput(name, string.Empty);
         }
 
-        public HtmlBuilder AppendStyle([LanguageInjection("css")] string rawCss)
+        public HtmlBuilder AppendStyle(string rawCss)
         {
             var child = new HtmlBuilder(HtmlTag.Style)
-                .Append(new HtmlBuilder(rawCss, encode:false));
+                .Append(new HtmlBuilder(rawCss, encode: false));
 
             return htmlBuilder.Append(child);
         }
 
-        public HtmlBuilder AppendStyleIf(bool condition, [LanguageInjection("css")] string rawCss)
+        public HtmlBuilder AppendStyleIf(bool condition, string rawCss)
         {
             if (!condition)
                 return htmlBuilder;
@@ -160,16 +125,16 @@ public static class HtmlBuilderChildrenExtensions
             return htmlBuilder.AppendStyle(rawCss);
         }
 
-        public HtmlBuilder AppendScript([LanguageInjection("javascript")] string rawScript)
+        public HtmlBuilder AppendScript(string rawScript)
         {
             var child = new HtmlBuilder(HtmlTag.Script)
                 .WithAttribute("type", "text/javascript")
-                .Append(new HtmlBuilder(rawScript, encode:false));
+                .Append(new HtmlBuilder(rawScript, encode: false));
 
             return htmlBuilder.Append(child);
         }
 
-        public HtmlBuilder AppendScriptIf(bool condition, [LanguageInjection("javascript")] string rawScript)
+        public HtmlBuilder AppendScriptIf(bool condition, string rawScript)
         {
             if (!condition)
                 return htmlBuilder;

@@ -14,15 +14,6 @@ public class HtmlBuilderChildrenExtensionsTests
     }
 
     [Fact]
-    public void AppendStateful_ShouldAppendUsingState()
-    {
-        var html = new HtmlBuilder(HtmlTag.Div)
-            .Append(HtmlTag.Span, 10, static (value, h) => h.AppendText(value.ToString()));
-
-        Assert.Equal("<div><span>10</span></div>", html.ToString());
-    }
-
-    [Fact]
     public void AppendDiv_ShouldAppendDivTag()
     {
         var html = new HtmlBuilder(HtmlTag.Div)

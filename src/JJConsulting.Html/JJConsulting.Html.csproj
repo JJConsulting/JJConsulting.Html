@@ -6,9 +6,4 @@
         <Nullable>enable</Nullable>
         <Description>JJConsulting.Html provides a fluent, low-allocation, strongly typed API for constructing HTML.</Description>
     </PropertyGroup>
-    
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
-    </ItemGroup>
-
 </Project>

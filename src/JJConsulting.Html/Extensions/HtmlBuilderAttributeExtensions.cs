@@ -2,9 +2,7 @@ namespace JJConsulting.Html.Extensions;
 
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
-[PublicAPI]
 public static class HtmlBuilderAttributeExtensions
 {
     extension(HtmlBuilder htmlBuilder)
@@ -89,13 +87,13 @@ public static class HtmlBuilderAttributeExtensions
             return htmlBuilder.WithAttribute("value", value);
         }
 
-        public HtmlBuilder WithOnChange([LanguageInjection("JavaScript")] string value)
+        public HtmlBuilder WithOnChange(string value)
         {
             htmlBuilder.WithAttribute("onchange", value);
             return htmlBuilder;
         }
 
-        public HtmlBuilder WithOnClick([LanguageInjection("JavaScript")] string value)
+        public HtmlBuilder WithOnClick(string value)
         {
             htmlBuilder.WithAttribute("onclick", value);
             return htmlBuilder;
