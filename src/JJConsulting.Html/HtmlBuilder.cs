@@ -33,6 +33,7 @@ public sealed class HtmlBuilder
     {
         _rawText = encode ? WebUtility.HtmlEncode(rawText) : rawText;
     }
+    
 
     /// <inheritdoc/>
     /// <param name="tag"></param>
