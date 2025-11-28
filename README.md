@@ -10,8 +10,7 @@ It is suitable for scenarios where a templating engine is not desirable, and whe
 * Fluent API for building HTML trees
 * Attribute helpers with conditional logic
 * HTML encoding for text and attribute values
-* Indented or compact output
-* Low allocations through `StringBuilder` pooling
+* Low allocations through `TextWriter`
 * Common element helpers: `Div`, `Span`, `Input`, `Label`, `A`, `Br`, `Hr` powered by source generators
 
 ---

@@ -102,7 +102,7 @@ public class HtmlBuilderTests
         var builder = new HtmlBuilder(HtmlTag.TextArea)
             .Append(new HtmlBuilder("line1\nline2"));
         var result = builder.ToString();
-        Assert.Equal("<textarea>line1\nline2</textarea>", result);
+        Assert.Equal("<textarea>line1&#xA;ine2</textarea>", result);
     }
 
     [Fact]
@@ -136,48 +136,5 @@ public class HtmlBuilderTests
     {
         var builder = new HtmlBuilder(HtmlTag.Div);
         Assert.Throws<InvalidOperationException>(() => builder.Prepend(builder));
-    }
-    
-    [Fact]
-    public void ToHtmlString_ShouldReturnIndentedHtml()
-    {
-        var builder = new HtmlBuilder(HtmlTag.Div)
-            .Append(new HtmlBuilder(HtmlTag.Span)
-                .Append(new HtmlBuilder("Hello")))
-            .Append(new HtmlBuilder(HtmlTag.P)
-                .Append(new HtmlBuilder("World")));
-
-        const string expected = """
-                                <div>
-                                  <span>
-                                    Hello
-                                  </span>
-                                  <p>
-                                    World
-                                  </p>
-                                </div>
-
-                                """;
-
-        var actual = builder.ToString(true);
-
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact]
-    public void ToHtmlString_SelfClosingTagIndented()
-    {
-        var builder = new HtmlBuilder(HtmlTag.Img)
-            .WithAttribute("src", "image.png")
-            .WithAttribute("alt", "My Image");
-
-        const string expected = """
-                       <img src="image.png" alt="My Image" />
-
-                       """;
-
-        var actual = builder.ToString(true);
-
-        Assert.Equal(expected, actual);
     }
 }
