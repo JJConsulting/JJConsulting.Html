@@ -100,7 +100,7 @@ public class HtmlBuilderAttributeExtensionsTests
             .WithAttribute("e", "<>&\"'");
 
         Assert.Equal(
-            "<div a=\"1&amp;2\" b=\"&lt;x&gt;\" c=\"&quot;quoted&quot;\" d=\"&#39;single&#39;\" e=\"&lt;&gt;&amp;&quot;&#39;\"></div>",
+            "<div a=\"1&amp;2\" b=\"&lt;x&gt;\" c=\"&quot;quoted&quot;\" d=\"&#x27;single&#x27;\" e=\"&lt;&gt;&amp;&quot;&#x27;\"></div>",
             html.ToString()
         );
     }

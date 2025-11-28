@@ -102,7 +102,7 @@ public class HtmlBuilderTests
         var builder = new HtmlBuilder(HtmlTag.TextArea)
             .Append(new HtmlBuilder("line1\nline2"));
         var result = builder.ToString();
-        Assert.Equal("<textarea>line1&#xA;ine2</textarea>", result);
+        Assert.Equal("<textarea>line1&#xA;line2</textarea>", result);
     }
 
     [Fact]
