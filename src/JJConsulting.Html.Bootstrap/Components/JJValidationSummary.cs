@@ -9,9 +9,9 @@ namespace JJConsulting.Html.Bootstrap.Components;
 /// </summary>
 public class JJValidationSummary : HtmlComponent
 {
-    public List<string> Errors { get; }
-
     public string? Title { get; set; }
+
+    public List<string> Errors { get; }
 
     /// <summary>
     /// Enable close panel
@@ -26,14 +26,16 @@ public class JJValidationSummary : HtmlComponent
         ShowCloseButton = true;
     }
 
-    public void SetErrors(Dictionary<string, string>? errors)
+    public JJValidationSummary(IEnumerable<string> errors) : this()
     {
-        if (errors == null)
-            return;
+        Errors.AddRange(errors);
+    }
 
-        foreach (var err in errors)
+    public JJValidationSummary(Dictionary<string,string> errors) : this()
+    {
+        foreach (var error in errors)
         {
-            Errors.Add(err.Value);
+            Errors.Add(error.Value);
         }
     }
 

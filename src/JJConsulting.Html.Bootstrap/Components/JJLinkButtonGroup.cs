@@ -1,6 +1,5 @@
 ﻿using JJConsulting.Html.Bootstrap.Abstractions;
 using JJConsulting.Html.Bootstrap.Extensions;
-using JJConsulting.Html.Bootstrap.Models;
 using JJConsulting.Html.Bootstrap.Utils;
 using JJConsulting.Html.Extensions;
 
@@ -39,7 +38,7 @@ public class JJLinkButtonGroup : HtmlComponent
         return parentElement;
     }
 
-    private void AddActionsAt(HtmlBuilder html)
+    public void AddActionsAt(HtmlBuilder html)
     {
         var actionList = Actions.FindAll(x => x is { IsGroup: false, Visible: true });
         var actionListGroup = Actions.FindAll(x => x is { IsGroup: true, Visible: true });
@@ -72,13 +71,13 @@ public class JJLinkButtonGroup : HtmlComponent
 
             if (action.DividerLine)
             {
-                ul.Append(HtmlTag.Li, li =>
+                ul.AppendLi(li =>
                 {
                     li.WithAttribute("role", "separator").WithCssClass("divider dropdown-divider");
                 });
             }
 
-            ul.Append(HtmlTag.Li, li =>
+            ul.AppendLi(li =>
             {
                 action.CssClass += " dropdown-item";
                 li.AppendComponent(action);
@@ -88,7 +87,7 @@ public class JJLinkButtonGroup : HtmlComponent
 
     private HtmlBuilder GetHtmlCaretButton()
     {
-        var html = new HtmlBuilder(HtmlTag.A)
+        var html = HtmlBuilder.A()
             .WithAttribute("href", "#")
             .WithAttribute(BootstrapHelper.DataToggle, "dropdown")
             .WithAttribute("aria-haspopup", "true")

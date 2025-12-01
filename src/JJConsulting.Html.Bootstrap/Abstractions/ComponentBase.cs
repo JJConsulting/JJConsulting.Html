@@ -41,7 +41,7 @@ public abstract class ComponentBase
         }
     }
 
-    public void SetAttribute(Dictionary<string, object?>? values)
+    public void SetAttributes(Dictionary<string, object?>? values)
     {
         if (values == null)
             return;
