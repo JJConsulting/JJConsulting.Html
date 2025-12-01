@@ -18,7 +18,7 @@ public abstract class ComponentBase
     /// <summary>
     /// HTML attributes represented by key/value pairs
     /// </summary>
-    public Dictionary<string, string> Attributes { get; } = new(StringComparer.InvariantCultureIgnoreCase);
+    public Dictionary<string, string> Attributes { get; set; } = new(StringComparer.InvariantCultureIgnoreCase);
 
     public string? CssClass { get; set; }
 
