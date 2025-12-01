@@ -32,7 +32,7 @@ internal static class BootstrapUtils
                 {
                     block.AppendP(p =>
                     {
-                        p.Append(new HtmlBuilder(title, encode:false));
+                        p.Append(new HtmlBuilder(title!, encode:false));
                     });
                 }
                 if (!string.IsNullOrEmpty(subTitle))
@@ -41,7 +41,7 @@ internal static class BootstrapUtils
                     {
                         f.WithCssClass("blockquote-footer");
                         f.WithCssClassIf(string.IsNullOrEmpty(title), "mt-1");
-                        f.Append(new HtmlBuilder(subTitle, encode:false));
+                        f.Append(new HtmlBuilder(subTitle!, encode:false));
                     });
                 }
             });
