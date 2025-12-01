@@ -25,6 +25,8 @@ jobs:
       matrix:
         project:
           - src/JJConsulting.Html
+          - src/JJConsulting.Html.Bootstrap
+          - src/JJConsulting.Html.Bootstrap.TagHelpers
     steps:
       - uses: actions/checkout@v4
       - name: Build and publish NuGet package

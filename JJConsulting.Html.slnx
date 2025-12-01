@@ -7,9 +7,14 @@
     <File Path=".github/workflows/dotnet.yml" />
     <File Path=".github/workflows/nuget.yml" />
   </Folder>
+  <Folder Name="/Example/">
+    <Project Path="example/JJConsulting.Html.Example/JJConsulting.Html.Example.csproj" />
+  </Folder>
   <Folder Name="/Tests/">
     <Project Path="test/JJConsulting.Html.Tests/JJConsulting.Html.Tests.csproj" />
   </Folder>
+  <Project Path="src/JJConsulting.Html.Bootstrap.TagHelpers/JJConsulting.Html.Bootstrap.TagHelpers.csproj" />
+  <Project Path="src/JJConsulting.Html.Bootstrap/JJConsulting.Html.Bootstrap.csproj" />
   <Project Path="src/JJConsulting.Html.SourceGenerators/JJConsulting.Html.SourceGenerators.csproj" />
   <Project Path="src/JJConsulting.Html/JJConsulting.Html.csproj" />
 </Solution>

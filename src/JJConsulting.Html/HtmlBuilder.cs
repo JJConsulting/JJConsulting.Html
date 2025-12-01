@@ -11,18 +11,15 @@ namespace JJConsulting.Html;
 /// Provides methods for creating, combining, and rendering HTML strings with nested elements, attributes,
 /// and raw text support.
 /// </summary>
-public class HtmlBuilder()
+public class HtmlBuilder() : IHtmlBuilder
 {
-    private readonly string? _rawText;
-    private readonly bool _encode = true;
     private readonly Dictionary<string, string?> _attributes = new(StringComparer.InvariantCultureIgnoreCase);
-    private readonly List<HtmlBuilder?> _children = [];
+    private readonly List<IHtmlBuilder?> _children = [];
     private readonly HtmlTag? _tag;
 
     public HtmlBuilder(string rawText, bool encode = true) : this()
     {
-        _rawText = rawText;
-        _encode = encode;
+        _children.Add(new HtmlText(rawText, encode));
     }
 
     public HtmlBuilder(HtmlTag tag) : this()
@@ -36,7 +33,7 @@ public class HtmlBuilder()
         _children.Add(new HtmlBuilder(rawText));
     }
 
-    public HtmlBuilder(HtmlTag tag, params List<HtmlBuilder?> children) : this(tag)
+    public HtmlBuilder(HtmlTag tag, params List<IHtmlBuilder?> children) : this(tag)
     {
         _children.AddRange(children);
     }
@@ -58,9 +55,6 @@ public class HtmlBuilder()
     {
         if (!_tag.HasValue)
         {
-            if (_rawText != null)
-                writer.Write(_encode ? encoder.Encode(_rawText) : _rawText);
-
             foreach (var c in _children)
             {
                 c?.WriteTo(writer, encoder);
@@ -96,15 +90,17 @@ public class HtmlBuilder()
 
     private void WriteAttributes(TextWriter writer, HtmlEncoder encoder)
     {
-        foreach (var item in _attributes)
+        if (_attributes is not { Count: > 0 })
+            return;
+
+        foreach (var attribute in _attributes)
         {
-            var key = encoder.Encode(item.Key);
-            var value = encoder.Encode(item.Value ?? "");
-            writer.Write(' ');
-            writer.Write(key);
+            writer.Write(" ");
+            writer.Write(attribute.Key);
             writer.Write("=\"");
-            writer.Write(value);
-            writer.Write('"');
+            if (attribute.Value != null)
+                encoder.Encode(writer, attribute.Value);
+            writer.Write("\"");
         }
     }
 
@@ -124,29 +120,29 @@ public class HtmlBuilder()
         return this;
     }
 
-    public HtmlBuilder Prepend(HtmlBuilder? builder)
+    public HtmlBuilder Prepend(IHtmlBuilder? html)
     {
-        if (ReferenceEquals(this, builder))
+        if (ReferenceEquals(this, html))
             throw new InvalidOperationException("Cannot prepend the same HtmlBuilder instance to itself.");
 
-        if (builder != null)
-            _children.Insert(0, builder);
+        if (html != null)
+            _children.Insert(0, html);
 
         return this;
     }
 
-    public HtmlBuilder Append(HtmlBuilder? builder)
+    public HtmlBuilder Append(IHtmlBuilder? html)
     {
-        if (ReferenceEquals(this, builder))
+        if (ReferenceEquals(this, html))
             throw new InvalidOperationException("Cannot append the same HtmlBuilder instance to itself.");
 
-        if (builder != null)
-            _children.Add(builder);
+        if (html != null)
+            _children.Add(html);
 
         return this;
     }
 
-    public HtmlBuilder AppendRange(IEnumerable<HtmlBuilder> htmlEnumerable)
+    public HtmlBuilder AppendRange(IEnumerable<IHtmlBuilder> htmlEnumerable)
     {
         _children.AddRange(htmlEnumerable);
         return this;

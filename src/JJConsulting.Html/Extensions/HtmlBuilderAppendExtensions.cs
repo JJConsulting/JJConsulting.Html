@@ -32,10 +32,9 @@ public static partial class HtmlBuilderAppendExtensions
 
         public HtmlBuilder AppendText(string? rawText)
         {
-            if (!string.IsNullOrEmpty(rawText))
+            if (rawText != null && !string.IsNullOrEmpty(rawText))
             {
-                var child = new HtmlBuilder(rawText!);
-                htmlBuilder.Append(child);
+                htmlBuilder.Append(new HtmlText(rawText, encode:true));
             }
 
             return htmlBuilder;
@@ -67,7 +66,7 @@ public static partial class HtmlBuilderAppendExtensions
         public HtmlBuilder AppendStyle(string rawCss)
         {
             var child = new HtmlBuilder(HtmlTag.Style)
-                .Append(new HtmlBuilder(rawCss, encode: false));
+                .Append(new HtmlText(rawCss, encode:false));
 
             return htmlBuilder.Append(child);
         }
@@ -84,7 +83,7 @@ public static partial class HtmlBuilderAppendExtensions
         {
             var child = new HtmlBuilder(HtmlTag.Script)
                 .WithAttribute("type", "text/javascript")
-                .Append(new HtmlBuilder(rawScript, encode: false));
+                .Append(new HtmlText(rawScript, encode: false));
 
             return htmlBuilder.Append(child);
         }

@@ -38,7 +38,7 @@ public sealed class HtmlBuilderTagExtensionsGenerator : IIncrementalGenerator
             {
                 var name = field.Name;
                 sb.AppendLine($"        public static HtmlBuilder {name}() => new(HtmlTag.{name});");
-                sb.AppendLine($"        public static HtmlBuilder {name}(params List<HtmlBuilder?> children) => new(HtmlTag.{name}, children);");
+                sb.AppendLine($"        public static HtmlBuilder {name}(params List<IHtmlBuilder?> children) => new(HtmlTag.{name}, children);");
                 sb.AppendLine($"        public static HtmlBuilder {name}(string rawText) => new(HtmlTag.{name}, rawText);");
             }
 
