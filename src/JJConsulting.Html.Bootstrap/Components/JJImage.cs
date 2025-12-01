@@ -8,7 +8,7 @@ public class JJImage(string src) : HtmlComponent
     public string Src { get; set; } = src;
     public string? Title { get; set; }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var element = new HtmlBuilder(HtmlTag.Img)
             .WithNameAndId(Name)

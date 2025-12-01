@@ -20,11 +20,11 @@ public class JJMessageBox : HtmlComponent
     public string? Button2Label { get; set; }
     public string? Button2JsCallback { get; set; }
     
-    internal JJMessageBox()
+    public JJMessageBox()
     {
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = new HtmlBuilder(HtmlTag.Script)
             .WithAttribute("type", "text/javascript")

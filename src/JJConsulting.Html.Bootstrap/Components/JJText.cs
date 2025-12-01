@@ -15,5 +15,5 @@ public sealed class JJText : HtmlComponent
         Text = text;
     }
 
-    internal override HtmlBuilder BuildHtml() => new(Text);
+    protected override HtmlBuilder BuildHtml() => new(Text);
 }

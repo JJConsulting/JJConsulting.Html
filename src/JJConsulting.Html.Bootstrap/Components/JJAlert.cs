@@ -34,7 +34,7 @@ public class JJAlert : HtmlComponent
 
     public bool ShowIcon { get; set; } = true;
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = new HtmlBuilder(HtmlTag.Div)
             .WithNameAndId(Name)

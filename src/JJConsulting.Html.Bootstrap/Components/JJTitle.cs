@@ -37,7 +37,7 @@ public sealed class JJTitle() : HtmlComponent
         Icon = icon;
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var div = new HtmlBuilder(HtmlTag.Div)
             .WithNameAndId(Name)

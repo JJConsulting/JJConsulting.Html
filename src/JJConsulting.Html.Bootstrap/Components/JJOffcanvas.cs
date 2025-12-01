@@ -13,7 +13,7 @@ public class JJOffcanvas : HtmlComponent
 
     public HtmlBuilder? Body { get; set; }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var offcanvas = HtmlBuilder.Div()
             .WithCssClass($"offcanvas {Position.GetCssClass()}")

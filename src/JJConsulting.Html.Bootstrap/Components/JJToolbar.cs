@@ -13,7 +13,7 @@ public sealed class JJToolbar : HtmlComponent
         Items = [];
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = HtmlBuilder.Div()
             .WithNameAndId(Name)

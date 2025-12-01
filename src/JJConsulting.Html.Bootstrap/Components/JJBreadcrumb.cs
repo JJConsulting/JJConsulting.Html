@@ -19,7 +19,7 @@ public class JJBreadcrumb : HtmlComponent
         Items.AddRange(items);
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = new HtmlBuilder(HtmlTag.Div)
             .WithNameAndId(Name)

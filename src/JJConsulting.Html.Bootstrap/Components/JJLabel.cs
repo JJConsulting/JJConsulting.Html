@@ -24,7 +24,7 @@ public class JJLabel : HtmlComponent
     {
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var element = new HtmlBuilder(HtmlTag.Label)
             .WithNameAndId(Name)

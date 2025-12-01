@@ -15,14 +15,14 @@ public class JJSpinner : HtmlComponent
             CssClass += " jj-blink";
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = new HtmlBuilder(HtmlTag.Span)
             .WithNameAndId(Name)
             .WithCssClass(CssClass)
             .WithAttributes(Attributes)
             .WithAttribute("role", "status")
-            .AppendIf(BootstrapHelper.Version == 3,()=> new JJIcon(FontAwesomeIcon.Circle).BuildHtml())
+            .AppendIf(BootstrapHelper.Version == 3,()=> new JJIcon(FontAwesomeIcon.Circle).GetHtmlBuilder())
             .AppendIf(BootstrapHelper.Version != 3, HtmlTag.Span, s =>
             {
                 s.WithCssClass("visually-hidden");

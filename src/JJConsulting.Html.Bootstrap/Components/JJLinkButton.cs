@@ -82,7 +82,7 @@ public class JJLinkButton : HtmlComponent
     {
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var icon = GetIcon();
         var html = new HtmlBuilder(Type is LinkButtonType.Submit or LinkButtonType.Button ? HtmlTag.Button : HtmlTag.A);

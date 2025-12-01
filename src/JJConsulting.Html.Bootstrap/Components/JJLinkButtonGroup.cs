@@ -23,7 +23,7 @@ public class JJLinkButtonGroup : HtmlComponent
     
     public string? MoreActionsText { get; set; }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var parentElement = new HtmlBuilder(HtmlTag.Div)
             .WithAttributes(Attributes)
@@ -39,7 +39,7 @@ public class JJLinkButtonGroup : HtmlComponent
         return parentElement;
     }
 
-    internal void AddActionsAt(HtmlBuilder html)
+    private void AddActionsAt(HtmlBuilder html)
     {
         var actionList = Actions.FindAll(x => x is { IsGroup: false, Visible: true });
         var actionListGroup = Actions.FindAll(x => x is { IsGroup: true, Visible: true });

@@ -52,7 +52,7 @@ public class JJCollapsePanel : HtmlComponent
         TitleIcon = null;
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var root = new HtmlBuilder(HtmlTag.Div);
 
@@ -203,7 +203,7 @@ public class JJCollapsePanel : HtmlComponent
                 foreach (var btn in Buttons)
                 {
                     div.AppendText("\u00A0");
-                    div.Append(btn.BuildHtml().WithCssClass("ms-1"));
+                    div.Append(btn.GetHtmlBuilder().WithCssClass("ms-1"));
                 }
             });
 

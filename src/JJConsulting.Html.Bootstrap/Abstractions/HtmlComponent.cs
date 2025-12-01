@@ -7,7 +7,7 @@ public abstract class HtmlComponent : ComponentBase
     /// <summary>
     /// Returns the object representation of the HTML
     /// </summary>
-    internal abstract HtmlBuilder BuildHtml();
+    protected abstract HtmlBuilder BuildHtml();
 
     public HtmlBuilder GetHtmlBuilder()
     {

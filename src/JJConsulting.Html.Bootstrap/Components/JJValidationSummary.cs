@@ -37,7 +37,7 @@ public class JJValidationSummary : HtmlComponent
         }
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var alert = new JJAlert
         {
@@ -49,6 +49,6 @@ public class JJValidationSummary : HtmlComponent
 
         alert.Messages.AddRange(Errors);
 
-        return alert.BuildHtml();
+        return alert.GetHtmlBuilder();
     }
 }

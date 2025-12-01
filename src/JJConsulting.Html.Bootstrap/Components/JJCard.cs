@@ -26,7 +26,7 @@ public class JJCard : HtmlComponent
     public FontAwesomeIcon? Icon { get; set; }
 
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = Layout switch
         {

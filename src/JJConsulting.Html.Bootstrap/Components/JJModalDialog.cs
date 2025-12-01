@@ -26,7 +26,7 @@ public class JJModalDialog : HtmlComponent
         Buttons = [];
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = new HtmlBuilder(HtmlTag.Div)
             .WithAttributes(Attributes)

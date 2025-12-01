@@ -20,7 +20,7 @@ public class JJTabNav : HtmlComponent
         ListTab = [];
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var html = new HtmlBuilder(HtmlTag.Div)
             .WithAttributes(Attributes)

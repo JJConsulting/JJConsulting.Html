@@ -46,7 +46,7 @@ public class JJIcon : HtmlComponent
         Tooltip = tooltip;
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var span = new HtmlBuilder(HtmlTag.Span)
             .WithNameAndId(Name)

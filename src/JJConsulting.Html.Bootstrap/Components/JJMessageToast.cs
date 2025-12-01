@@ -20,7 +20,7 @@ public class JJMessageToast : HtmlComponent
         Name = "toast-alert";
     }
 
-    internal override HtmlBuilder BuildHtml()
+    protected override HtmlBuilder BuildHtml()
     {
         var htmlToast = new HtmlBuilder(HtmlTag.Div)
             .WithCssClass("position-fixed bottom-0 end-0 p-3")
