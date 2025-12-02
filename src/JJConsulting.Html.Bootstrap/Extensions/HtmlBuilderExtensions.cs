@@ -1,5 +1,4 @@
 using JJConsulting.Html.Bootstrap.Abstractions;
-using JJConsulting.Html.Bootstrap.Models;
 using JJConsulting.Html.Bootstrap.Utils;
 
 namespace JJConsulting.Html.Bootstrap.Extensions;
@@ -8,7 +7,7 @@ public static class HtmlBuilderExtensions
 {
     extension(HtmlBuilder htmlBuilder)
     {
-        public HtmlBuilder PrependComponent(HtmlComponent? component)
+        public HtmlBuilder PrependComponent<TComponent>(TComponent? component) where TComponent : HtmlComponent
         {
             if (component != null)
                 htmlBuilder.Prepend(component.GetHtmlBuilder());
@@ -19,7 +18,7 @@ public static class HtmlBuilderExtensions
         /// <summary>
         /// Insert a <see cref="HtmlComponent"/> as a child of caller builder.
         /// </summary>
-        public HtmlBuilder AppendComponent(HtmlComponent? component)
+        public HtmlBuilder AppendComponent<TComponent>(TComponent? component) where TComponent : HtmlComponent
         {
             if (component is not null)
                 htmlBuilder.Append(component.GetHtmlBuilder());

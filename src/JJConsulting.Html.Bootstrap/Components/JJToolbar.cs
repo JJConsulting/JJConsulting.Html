@@ -6,12 +6,7 @@ namespace JJConsulting.Html.Bootstrap.Components;
 
 public sealed class JJToolbar : HtmlComponent
 {
-    public List<HtmlBuilder?> Items { get; set; }
-
-    public JJToolbar()
-    {
-        Items = [];
-    }
+    public List<HtmlBuilder?> Items { get; set; } = [];
 
     protected override HtmlBuilder BuildHtml()
     {
@@ -32,7 +27,7 @@ public sealed class JJToolbar : HtmlComponent
     {
         var div = new HtmlBuilder(HtmlTag.Div)
             .WithCssClass("col-sm-12");
-        
+
         for (var i = 0; i < Items.Count; i++)
         {
             var htmlBuilder = Items[i];
