@@ -52,15 +52,19 @@ public sealed class JJTitle() : HtmlComponent
             {
                 if (Icon.HasValue)
                 {
-                    tag.AppendSpan(span => { span.AppendComponent(new JJIcon(Icon.Value)); });
+                    tag.AppendSpan(span =>
+                    {
+                        span.Append(new JJIcon(Icon.Value).GetHtmlBuilder());
+                        span.WithCssClass("me-1");
+                    });
                 }
 
-                tag.Append(new HtmlBuilder(Title!, encode: false));
+                tag.Append(new HtmlBuilder(Title!, encode: false)).WithCssClass("me-1");
                 if (!string.IsNullOrEmpty(SubTitle))
                 {
                     tag.Append(HtmlTag.Small, small =>
                     {
-                        small.WithCssClass("sub-title me-1");
+                        small.WithCssClass("sub-title");
                         small.Append(new HtmlBuilder(SubTitle!, encode: false));
                     });
                 }
