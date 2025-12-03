@@ -79,7 +79,7 @@ public class JJMessageToast : HtmlComponent
         {
             script.WithAttribute("type", "text/javascript")
                 .WithAttribute("lang", "javascript")
-                .AppendText($"MessageToastHelper.showWhenDOMLoaded('{Name}');");
+                .Append(new HtmlBuilder($"MessageToastHelper.showWhenDOMLoaded('{Name}');", encode:false));
         });
 
         return html;

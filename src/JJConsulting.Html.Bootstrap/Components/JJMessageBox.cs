@@ -26,10 +26,8 @@ public class JJMessageBox : HtmlComponent
 
     protected override HtmlBuilder BuildHtml()
     {
-        var html = new HtmlBuilder(HtmlTag.Script)
-            .WithAttribute("type", "text/javascript")
-            .WithAttribute("lang", "javascript")
-            .AppendText(GetShowScript());
+        var html = new HtmlBuilder()
+            .AppendScript(GetShowScript());
 
         return html;
     }
