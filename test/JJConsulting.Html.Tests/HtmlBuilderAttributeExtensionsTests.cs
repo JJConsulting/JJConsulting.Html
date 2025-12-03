@@ -119,8 +119,8 @@ public class HtmlBuilderAttributeExtensionsTests
     public void Attribute_WithNullValue_ShouldNotThrow_AndShouldNotRender()
     {
         var html = new HtmlBuilder(HtmlTag.Div)
-            .WithAttribute("data", null);
+            .WithAttribute("data");
 
-        Assert.Equal("<div data=\"\"></div>", html.ToString());
+        Assert.Equal("<div data></div>", html.ToString());
     }
 }

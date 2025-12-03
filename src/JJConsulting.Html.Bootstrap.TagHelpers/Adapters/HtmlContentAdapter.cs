@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers.Adapters;
 
-internal sealed class HtmlContentAdapter(HtmlComponent component) : IHtmlContent
+public sealed class HtmlContentAdapter(HtmlComponent component) : IHtmlContent
 {
     public void WriteTo(TextWriter writer, HtmlEncoder encoder)
     {

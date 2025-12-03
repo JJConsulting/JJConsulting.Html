@@ -11,11 +11,16 @@ namespace JJConsulting.Html;
 /// Provides methods for creating, combining, and rendering HTML strings with nested elements, attributes,
 /// and raw text support.
 /// </summary>
-public class HtmlBuilder() : IHtmlBuilder
+public class HtmlBuilder : IHtmlBuilder
 {
-    private readonly Dictionary<string, string?> _attributes = new(StringComparer.InvariantCultureIgnoreCase);
-    private readonly List<IHtmlBuilder?> _children = [];
+    private readonly Dictionary<string, string?>? _attributes;
+    private readonly List<IHtmlBuilder> _children;
     private readonly HtmlTag? _tag;
+
+    public HtmlBuilder()
+    {
+        _children = [];
+    }
 
     public HtmlBuilder(string rawText, bool encode = true) : this()
     {
@@ -25,17 +30,18 @@ public class HtmlBuilder() : IHtmlBuilder
     public HtmlBuilder(HtmlTag tag) : this()
     {
         _tag = tag;
+        _attributes = new Dictionary<string, string?>(StringComparer.InvariantCultureIgnoreCase);
     }
 
-    public HtmlBuilder(HtmlTag tag, string rawText) : this()
+    public HtmlBuilder(HtmlTag tag, string rawText) : this(tag)
+    {
+        _children.Add(new HtmlText(rawText));
+    }
+
+    public HtmlBuilder(HtmlTag tag, params List<IHtmlBuilder> children)
     {
         _tag = tag;
-        _children.Add(new HtmlBuilder(rawText));
-    }
-
-    public HtmlBuilder(HtmlTag tag, params List<IHtmlBuilder?> children) : this(tag)
-    {
-        _children.AddRange(children);
+        _children = children;
     }
 
     public override string ToString()
@@ -57,20 +63,21 @@ public class HtmlBuilder() : IHtmlBuilder
         {
             foreach (var c in _children)
             {
-                c?.WriteTo(writer, encoder);
+                c.WriteTo(writer, encoder);
             }
 
             return;
         }
 
-        var tagName = _tag.Value.Name;
+        var tag = _tag.Value;
+        var tagName = tag.Name;
 
         writer.Write('<');
         writer.Write(tagName);
 
         WriteAttributes(writer, encoder);
 
-        if (!_tag.Value.HasClosingTag)
+        if (!tag.HasClosingTag)
         {
             writer.Write(" />");
             return;
@@ -80,7 +87,7 @@ public class HtmlBuilder() : IHtmlBuilder
 
         foreach (var child in _children)
         {
-            child?.WriteTo(writer, encoder);
+            child.WriteTo(writer, encoder);
         }
 
         writer.Write("</");
@@ -90,54 +97,63 @@ public class HtmlBuilder() : IHtmlBuilder
 
     private void WriteAttributes(TextWriter writer, HtmlEncoder encoder)
     {
-        if (_attributes is not { Count: > 0 })
+        if (_attributes?.Count is null or 0)
             return;
 
         foreach (var attribute in _attributes)
         {
-            writer.Write(" ");
+            writer.Write(' ');
             writer.Write(attribute.Key);
+
+            if (attribute.Value is null)
+                continue;
+
             writer.Write("=\"");
-            if (attribute.Value != null)
-                encoder.Encode(writer, attribute.Value);
-            writer.Write("\"");
+            encoder.Encode(writer, attribute.Value);
+            writer.Write('"');
         }
     }
 
-    public string? GetAttribute(string key) => _attributes[key];
+    public string? GetAttribute(string key) => _attributes?[key];
 
-    public bool TryGetAttribute(string key, out string? value) => _attributes.TryGetValue(key, out value);
-
-    public HtmlBuilder WithAttribute(string name)
+    public bool TryGetAttribute(string key, out string? value)
     {
-        _attributes[name] = name;
-        return this;
+        if (_attributes is not null)
+            return _attributes.TryGetValue(key, out value);
+
+        value = null;
+
+        return false;
     }
 
-    public HtmlBuilder WithAttribute(string name, string? value)
+    public HtmlBuilder WithAttribute(string name, string? value = null)
     {
-        _attributes[name] = value;
+        _attributes?[name] = value;
         return this;
     }
 
     public HtmlBuilder Prepend(IHtmlBuilder? html)
     {
+        if (html is null)
+            return this;
+
         if (ReferenceEquals(this, html))
             throw new InvalidOperationException("Cannot prepend the same HtmlBuilder instance to itself.");
 
-        if (html != null)
-            _children.Insert(0, html);
+        _children.Insert(0, html);
 
         return this;
     }
 
     public HtmlBuilder Append(IHtmlBuilder? html)
     {
+        if (html is null)
+            return this;
+
         if (ReferenceEquals(this, html))
             throw new InvalidOperationException("Cannot append the same HtmlBuilder instance to itself.");
 
-        if (html != null)
-            _children.Add(html);
+        _children.Add(html);
 
         return this;
     }
@@ -146,14 +162,5 @@ public class HtmlBuilder() : IHtmlBuilder
     {
         _children.AddRange(htmlEnumerable);
         return this;
-    }
-
-    /// <summary>
-    /// Clears all attributes and child elements from the current HtmlBuilder instance.
-    /// </summary>
-    public void Clear()
-    {
-        _attributes.Clear();
-        _children.Clear();
     }
 }

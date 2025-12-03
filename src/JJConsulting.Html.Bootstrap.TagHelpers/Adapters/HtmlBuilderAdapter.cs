@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers.Adapters;
 
-internal sealed class HtmlBuilderAdapter(IHtmlContent htmlContent) : IHtmlBuilder
+public sealed class HtmlBuilderAdapter(IHtmlContent htmlContent) : IHtmlBuilder
 {
     public void WriteTo(TextWriter writer, HtmlEncoder encoder)
     {
