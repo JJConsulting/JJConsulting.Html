@@ -14,7 +14,7 @@ namespace JJConsulting.Html;
 public class HtmlBuilder : IHtmlBuilder
 {
     private readonly Dictionary<string, string?>? _attributes;
-    private readonly List<IHtmlBuilder> _children;
+    private readonly List<IHtmlBuilder?> _children;
     private readonly HtmlTag? _tag;
 
     public HtmlBuilder()
@@ -38,7 +38,7 @@ public class HtmlBuilder : IHtmlBuilder
         _children.Add(new HtmlText(rawText));
     }
 
-    public HtmlBuilder(HtmlTag tag, params List<IHtmlBuilder> children)
+    public HtmlBuilder(HtmlTag tag, params List<IHtmlBuilder?> children)
     {
         _tag = tag;
         _children = children;
@@ -63,7 +63,7 @@ public class HtmlBuilder : IHtmlBuilder
         {
             foreach (var c in _children)
             {
-                c.WriteTo(writer, encoder);
+                c?.WriteTo(writer, encoder);
             }
 
             return;
@@ -87,7 +87,7 @@ public class HtmlBuilder : IHtmlBuilder
 
         foreach (var child in _children)
         {
-            child.WriteTo(writer, encoder);
+            child?.WriteTo(writer, encoder);
         }
 
         writer.Write("</");
