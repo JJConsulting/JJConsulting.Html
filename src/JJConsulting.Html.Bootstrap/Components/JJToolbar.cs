@@ -17,25 +17,22 @@ public sealed class JJToolbar : HtmlComponent
             .AppendDiv(row =>
             {
                 row.WithCssClass("row");
-                row.Append(GetHtmlCol());
+                row.Append(GetActionHtml());
             });
 
         return html;
     }
 
-    private HtmlBuilder GetHtmlCol()
+    private HtmlBuilder GetActionHtml()
     {
-        var div = new HtmlBuilder(HtmlTag.Div)
-            .WithCssClass("col-sm-12");
+        var div = HtmlBuilder.Div().WithCssClass("col-sm-12");
 
-        for (var i = 0; i < Items.Count; i++)
+        foreach (var htmlBuilder in Items)
         {
-            var htmlBuilder = Items[i];
             if (htmlBuilder == null)
                 continue;
 
-            if (i != 0)
-                htmlBuilder.WithStyle("margin-right: 3px;");
+            htmlBuilder.WithCssClass("me-1");
 
             div.Append(htmlBuilder);
         }

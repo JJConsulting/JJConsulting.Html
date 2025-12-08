@@ -10,8 +10,8 @@ public class JJTabNav : HtmlComponent
 {
     public int SelectedTabIndex { get; set; }
 
-    internal string InputHiddenSelectedTabName => $"selected_tab_{Name}";
-    
+    protected string InputHiddenSelectedTabName => $"selected_tab_{Name}";
+
     public List<NavContent> ListTab { get; set; }
 
     public JJTabNav()
@@ -45,7 +45,7 @@ public class JJTabNav : HtmlComponent
 
         for (int i = 0; i < ListTab.Count; i++)
         {
-            NavContent nav = ListTab[i];
+            var nav = ListTab[i];
             string navId = $"{Name}_nav_{i}";
 
             var index = i;
@@ -83,7 +83,7 @@ public class JJTabNav : HtmlComponent
 
         for (int i = 0; i < ListTab.Count; i++)
         {
-            NavContent nav = ListTab[i];
+            var nav = ListTab[i];
             var divContent = new HtmlBuilder(HtmlTag.Div)
                 .WithAttribute("id", $"{Name}_nav_{i}")
                 .WithAttribute("role", "tabpanel")
