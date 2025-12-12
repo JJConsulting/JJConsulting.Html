@@ -1,5 +1,4 @@
 ﻿using JJConsulting.Html.Bootstrap.Abstractions;
-using JJConsulting.Html.Bootstrap.Models;
 using JJConsulting.Html.Extensions;
 
 namespace JJConsulting.Html.Bootstrap.Components;

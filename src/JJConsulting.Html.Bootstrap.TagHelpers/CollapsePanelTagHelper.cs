@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers;
 
-public class CollapsePanelTagHelper
-    : TagHelper
+public class CollapsePanelTagHelper : TagHelper
 {
     [HtmlAttributeName("name")] public string? Name { get; set; }
 

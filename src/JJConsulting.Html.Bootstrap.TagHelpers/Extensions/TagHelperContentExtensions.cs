@@ -6,8 +6,16 @@ namespace JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
 
 public static class TagHelperContentExtensions
 {
-    public static void SetHtmlContent(this TagHelperContent content, HtmlComponent component)
+    extension(TagHelperContent content)
     {
-        content.SetHtmlContent(new HtmlContentAdapter(component));
+        public void SetHtmlContent(HtmlBuilder html)
+        {
+            content.SetHtmlContent(new HtmlContentAdapter(html));
+        }
+
+        public void SetHtmlContent(HtmlComponent component)
+        {
+            content.SetHtmlContent(new HtmlContentAdapter(component.GetHtmlBuilder()));
+        }
     }
 }

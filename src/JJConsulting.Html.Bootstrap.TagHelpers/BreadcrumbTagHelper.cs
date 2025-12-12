@@ -1,5 +1,6 @@
 ﻿using JJConsulting.Html.Bootstrap.Components;
 using JJConsulting.Html.Bootstrap.Models;
+using JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers;
@@ -18,8 +19,8 @@ public class BreadcrumbTagHelper : TagHelper
 
         if (CssClass is not null)
             breadcrumb.CssClass = CssClass;
-        
+
         output.SuppressOutput();
-        output.Content.SetHtmlContent(breadcrumb.GetHtml());
+        output.Content.SetHtmlContent(breadcrumb);
     }
 }
