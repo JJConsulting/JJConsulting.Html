@@ -91,7 +91,7 @@ public class JJAlert : HtmlComponent
             }
             else if (Messages.Count == 1)
             {
-                div.AppendText(Messages[0]);
+                div.Append(new HtmlBuilder(Messages[0], encode:false));
             }
         });
 
