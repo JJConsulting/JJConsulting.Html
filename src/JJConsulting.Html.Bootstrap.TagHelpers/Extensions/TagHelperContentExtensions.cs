@@ -1,5 +1,4 @@
 using JJConsulting.Html.Bootstrap.Abstractions;
-using JJConsulting.Html.Bootstrap.TagHelpers.Adapters;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
@@ -10,12 +9,12 @@ public static class TagHelperContentExtensions
     {
         public void SetHtmlContent(HtmlBuilder html)
         {
-            content.SetHtmlContent(new HtmlContentAdapter(html));
+            content.SetHtmlContent(html.ToHtmlContent());
         }
 
         public void SetHtmlContent(HtmlComponent component)
         {
-            content.SetHtmlContent(new HtmlContentAdapter(component.GetHtmlBuilder()));
+            content.SetHtmlContent(component.GetHtmlContent());
         }
     }
 }

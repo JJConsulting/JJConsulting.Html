@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<PackageProjectUrl>https://www.github.com/JJConsulting/JJConsulting.Html</PackageProjectUrl>
 		<RepositoryUrl>https://www.github.com/JJConsulting/JJConsulting.Html</RepositoryUrl>
-		<Version>1.0.17</Version>
+		<Version>1.0.18</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<FileVersion>$(Version)</FileVersion>
@@ -11,7 +11,7 @@
 		<WarningsAsErrors>CA1859;CS4014</WarningsAsErrors>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Company>JJ Consulting</Company>
-		<Copyright>© 2025 JJConsulting. All rights reserved.</Copyright>
+		<Copyright>©2026 JJConsulting. All rights reserved.</Copyright>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 	</PropertyGroup>
 
