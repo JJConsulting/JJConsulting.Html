@@ -69,7 +69,8 @@ public class JJMessageToast : HtmlComponent
                 toast.AppendIf(Message != null, HtmlTag.Div, body =>
                 {
                     body.WithCssClass("toast-body")
-                        .AppendText(Message!);
+                        .AppendStyle("white-space: pre-line;")
+                        .AppendText(Message);
                 });
             });
 

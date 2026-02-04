@@ -23,7 +23,7 @@ public class MessageToastTagHelper : TagHelper
     [HtmlAttributeName("icon")]
     public FontAwesomeIcon? Icon { get; set; }
 
-    [HtmlAttributeName("message")] 
+    [HtmlAttributeName("message")]
     public string? Message { get; set; }
 
     [HtmlAttributeName("show-as-opened")] public bool ShowAsOpened { get; set; }

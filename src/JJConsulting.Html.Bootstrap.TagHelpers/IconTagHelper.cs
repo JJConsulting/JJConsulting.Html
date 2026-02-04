@@ -15,7 +15,7 @@ public class IconTagHelper : TagHelper
 
     [HtmlAttributeName("icon")]
     public FontAwesomeIcon Icon { get; set; }
-    
+
     [HtmlAttributeName("class")]
     public string? CssClass { get; set; }
 
