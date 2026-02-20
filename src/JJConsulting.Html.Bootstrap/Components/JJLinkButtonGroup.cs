@@ -18,8 +18,8 @@ public class JJLinkButtonGroup : HtmlComponent
 
     public bool ShowAsButton { get; set; }
 
-    public string? CaretText { get; set; }
-    
+    public HtmlBuilder? CaretHtml { get; set; }
+
     public string? MoreActionsText { get; set; }
 
     protected override HtmlBuilder BuildHtml()
@@ -33,8 +33,8 @@ public class JJLinkButtonGroup : HtmlComponent
         AddActionsAt(parentElement);
 
         if (BootstrapHelper.Version is 5 && !ShowAsButton)
-            parentElement.WithAttribute("title",MoreActionsText);
-        
+            parentElement.WithAttribute("title", MoreActionsText);
+
         return parentElement;
     }
 
@@ -71,10 +71,7 @@ public class JJLinkButtonGroup : HtmlComponent
 
             if (action.DividerLine)
             {
-                ul.AppendLi(li =>
-                {
-                    li.WithAttribute("role", "separator").WithCssClass("divider dropdown-divider");
-                });
+                ul.AppendLi(li => { li.WithAttribute("role", "separator").WithCssClass("divider dropdown-divider"); });
             }
 
             ul.AppendLi(li =>
@@ -94,14 +91,13 @@ public class JJLinkButtonGroup : HtmlComponent
             .WithAttribute("aria-expanded", "false")
             .WithCssClass("dropdown-toggle")
             .WithCssClassIf(ShowAsButton, BootstrapHelper.BtnDefault)
-            .AppendTextIf(!string.IsNullOrEmpty(CaretText), CaretText)
-            .AppendIf( BootstrapHelper.Version is 3,HtmlTag.Span, s =>
+            .Append(CaretHtml)
+            .AppendIf(BootstrapHelper.Version is 3, HtmlTag.Span, s =>
             {
                 s.WithCssClass("caret")
-                    .WithToolTip(MoreActionsText );
+                    .WithToolTip(MoreActionsText);
             });
-            
+
         return html;
     }
-
 }
