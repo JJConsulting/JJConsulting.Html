@@ -3,6 +3,7 @@ using JJConsulting.Html.Bootstrap.Extensions;
 using JJConsulting.Html.Bootstrap.Models;
 using JJConsulting.Html.Bootstrap.Utils;
 using JJConsulting.Html.Extensions;
+using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html.Bootstrap.Components;
 
@@ -10,7 +11,7 @@ public class JJModalDialog : HtmlComponent
 {
     public string? Title { get; set; }
 
-    public IHtmlBuilder? Content { get; set; }
+    public IHtmlContent? Content { get; set; }
 
     public List<JJLinkButton> Buttons { get; set; }
 

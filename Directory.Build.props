@@ -14,11 +14,5 @@
 		<Copyright>©2026 JJConsulting. All rights reserved.</Copyright>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Roslynator.Analyzers" Version="4.13.1" PrivateAssets="All"/>
-		<PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.13.1" PrivateAssets="All" />
-		<PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.13.1" PrivateAssets="All"/>
-	</ItemGroup>
 </Project>
 

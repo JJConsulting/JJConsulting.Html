@@ -4,6 +4,7 @@ using JJConsulting.Html.Bootstrap.Extensions;
 using JJConsulting.Html.Bootstrap.Models;
 using JJConsulting.Html.Bootstrap.Utils;
 using JJConsulting.Html.Extensions;
+using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html.Bootstrap.Components;
 
@@ -28,7 +29,7 @@ public class JJAlert : HtmlComponent
     };
 
     public List<string> Messages { get; } = [];
-    public IHtmlBuilder? Content { get; set; }
+    public IHtmlContent? Content { get; set; }
 
     public bool ShowCloseButton { get; set; }
 

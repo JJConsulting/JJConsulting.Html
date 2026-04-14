@@ -1,8 +1,9 @@
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html.Bootstrap.Abstractions;
 
-public abstract class HtmlComponent : ComponentBase
+public abstract class HtmlComponent : ComponentBase, IHtmlContent
 {
     /// <summary>
     /// Returns the object representation of the HTML

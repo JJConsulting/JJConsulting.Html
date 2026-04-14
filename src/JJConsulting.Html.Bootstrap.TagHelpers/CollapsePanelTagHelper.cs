@@ -2,8 +2,6 @@ using JetBrains.Annotations;
 using JJConsulting.FontAwesome;
 using JJConsulting.Html.Bootstrap.Components;
 using JJConsulting.Html.Bootstrap.Models;
-using JJConsulting.Html.Bootstrap.TagHelpers.Adapters;
-using JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers;
@@ -45,7 +43,7 @@ public class CollapsePanelTagHelper : TagHelper
             panel.TitleIcon = new JJIcon(Icon);
 
         var content = await output.GetChildContentAsync();
-        panel.Content = new HtmlBuilderAdapter(content);
+        panel.Content = content;
         
         output.TagMode = TagMode.StartTagAndEndTag;
         output.Content.SetHtmlContent(panel);

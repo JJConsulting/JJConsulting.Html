@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using JJConsulting.Html.Example.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JJConsulting.Html.Example.Controllers;
 

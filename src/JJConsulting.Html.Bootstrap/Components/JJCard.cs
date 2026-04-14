@@ -4,6 +4,7 @@ using JJConsulting.Html.Bootstrap.Extensions;
 using JJConsulting.Html.Bootstrap.Models;
 using JJConsulting.Html.Bootstrap.Utils;
 using JJConsulting.Html.Extensions;
+using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html.Bootstrap.Components;
 
@@ -19,7 +20,7 @@ public class JJCard : HtmlComponent
 
     public BootstrapColor Color { get; set; } = BootstrapColor.Default;
 
-    public IHtmlBuilder? Content { get; set; }
+    public IHtmlContent? Content { get; set; }
 
     private bool HasTitle => !string.IsNullOrEmpty(Title) || !string.IsNullOrEmpty(SubTitle);
 

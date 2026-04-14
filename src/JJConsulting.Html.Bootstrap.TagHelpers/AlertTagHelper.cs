@@ -1,8 +1,6 @@
 using JJConsulting.FontAwesome;
 using JJConsulting.Html.Bootstrap.Components;
 using JJConsulting.Html.Bootstrap.Models;
-using JJConsulting.Html.Bootstrap.TagHelpers.Adapters;
-using JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers;
@@ -49,7 +47,7 @@ public class AlertTagHelper : TagHelper
         var content = await output.GetChildContentAsync();
 
         if (!content.IsEmptyOrWhiteSpace)
-            alert.Content = new HtmlBuilderAdapter(content);
+            alert.Content = content;
 
         output.TagMode = TagMode.StartTagAndEndTag;
         output.Content.SetHtmlContent(alert);

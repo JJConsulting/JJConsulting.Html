@@ -3,7 +3,6 @@ using JetBrains.Annotations;
 using JJConsulting.FontAwesome;
 using JJConsulting.Html.Bootstrap.Components;
 using JJConsulting.Html.Bootstrap.Models;
-using JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 

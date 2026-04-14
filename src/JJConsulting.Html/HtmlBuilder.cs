@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html;
 
@@ -11,10 +12,10 @@ namespace JJConsulting.Html;
 /// Provides methods for creating, combining, and rendering HTML strings with nested elements, attributes,
 /// and raw text support.
 /// </summary>
-public class HtmlBuilder : IHtmlBuilder
+public class HtmlBuilder : IHtmlContent
 {
     private readonly Dictionary<string, string?>? _attributes;
-    private readonly List<IHtmlBuilder?> _children;
+    private readonly List<IHtmlContent?> _children;
     private readonly HtmlTag? _tag;
 
     public HtmlBuilder()
@@ -38,7 +39,7 @@ public class HtmlBuilder : IHtmlBuilder
         _children.Add(new HtmlText(rawText));
     }
 
-    public HtmlBuilder(HtmlTag tag, params List<IHtmlBuilder?> children)
+    public HtmlBuilder(HtmlTag tag, params List<IHtmlContent?> children)
     {
         _tag = tag;
         _children = children;
@@ -132,7 +133,7 @@ public class HtmlBuilder : IHtmlBuilder
         return this;
     }
 
-    public HtmlBuilder Prepend(IHtmlBuilder? html)
+    public HtmlBuilder Prepend(IHtmlContent? html)
     {
         if (html is null)
             return this;
@@ -145,7 +146,7 @@ public class HtmlBuilder : IHtmlBuilder
         return this;
     }
 
-    public HtmlBuilder Append(IHtmlBuilder? html)
+    public HtmlBuilder Append(IHtmlContent? html)
     {
         if (html is null)
             return this;
@@ -158,7 +159,7 @@ public class HtmlBuilder : IHtmlBuilder
         return this;
     }
 
-    public HtmlBuilder AppendRange(IEnumerable<IHtmlBuilder> htmlEnumerable)
+    public HtmlBuilder AppendRange(IEnumerable<IHtmlContent> htmlEnumerable)
     {
         _children.AddRange(htmlEnumerable);
         return this;

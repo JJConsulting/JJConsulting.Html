@@ -1,5 +1,4 @@
 using JJConsulting.Html.Bootstrap.Components;
-using JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;

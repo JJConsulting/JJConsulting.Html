@@ -1,8 +1,6 @@
 using JJConsulting.FontAwesome;
 using JJConsulting.Html.Bootstrap.Components;
 using JJConsulting.Html.Bootstrap.Models;
-using JJConsulting.Html.Bootstrap.TagHelpers.Adapters;
-using JJConsulting.Html.Bootstrap.TagHelpers.Extensions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JJConsulting.Html.Bootstrap.TagHelpers;
@@ -40,7 +38,7 @@ public class CardTagHelper : TagHelper
         }
 
         var content = await output.GetChildContentAsync();
-        card.Content = new HtmlBuilderAdapter(content);
+        card.Content = content;
 
         output.TagMode = TagMode.StartTagAndEndTag;
         output.Content.SetHtmlContent(card);
