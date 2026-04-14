@@ -3,6 +3,7 @@ using JJConsulting.Html.Bootstrap.Extensions;
 using JJConsulting.Html.Bootstrap.Models;
 using JJConsulting.Html.Bootstrap.Utils;
 using JJConsulting.Html.Extensions;
+using Microsoft.AspNetCore.Html;
 
 namespace JJConsulting.Html.Bootstrap.Components;
 
@@ -16,7 +17,7 @@ public class JJLabel : HtmlComponent
         set => SetAttribute("for", value);
     }
 
-    public string? Text { get; set; }
+    public string Text { get; set; }
     public string? RequiredText { get; set; }
     public bool IsRequired { get; set; }
 
@@ -26,12 +27,12 @@ public class JJLabel : HtmlComponent
 
     protected override HtmlBuilder BuildHtml()
     {
-        var element = new HtmlBuilder(HtmlTag.Label)
+        var element = HtmlBuilder.Label()
             .WithNameAndId(Name)
             .WithAttributes(Attributes)
             .WithCssClass(BootstrapHelper.Label)
             .WithCssClass(CssClass)
-            .AppendText(Text)
+            .Append(new HtmlBuilder(Text, encode:false))
             .AppendIf(IsRequired, HtmlTag.Span, s =>
             {
                 s.WithCssClass("required-symbol");
