@@ -11,6 +11,7 @@ It is suitable for scenarios where a templating engine is not desirable, and whe
 * Attribute helpers with conditional logic
 * HTML encoding for text and attribute values
 * Low allocations through `TextWriter`
+* Built on ASP.NET Core `IHtmlContent` for direct interoperability with Razor and Tag Helpers
 * Common element helpers: `Div`, `Span`, `Input`, `Label`, `A`, `Br`, `Hr` powered by source generators
 
 ---
@@ -92,6 +93,28 @@ root.AppendText(" Just text ");
 root.AppendBr();
 root.AppendHiddenInput("token", "abc123");
 ```
+
+---
+
+## ASP.NET Core Integration
+
+`HtmlBuilder` implements `IHtmlContent`, and child nodes are also handled as `IHtmlContent`.
+That means ASP.NET Core content such as `TagHelperContent` can be appended or assigned directly without converting it to a string first.
+
+```csharp
+public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+{
+    var content = await output.GetChildContentAsync();
+
+    var card = new HtmlBuilder(HtmlTag.Div)
+        .WithCssClass("card")
+        .Append(content);
+
+    output.Content.SetHtmlContent(card);
+}
+```
+
+This makes it easy to compose `JJConsulting.Html` with custom Tag Helpers, Razor output, and other ASP.NET Core HTML primitives.
 
 ---
 
@@ -230,4 +253,3 @@ public static class HtmlBuilderExtensions
     }
 }
 ```
-
