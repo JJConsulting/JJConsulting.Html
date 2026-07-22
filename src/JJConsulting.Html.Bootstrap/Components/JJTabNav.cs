@@ -56,6 +56,9 @@ public class JJTabNav : HtmlComponent
                   .WithAttribute("role", "presentation")
                   .Append(HtmlTag.A, a =>
                   {
+                      if (nav.Icon.HasValue)
+                          a.AppendComponent(new JJIcon(nav.Icon.Value)).WithCssClass("me-1");
+                      
                       a.WithAttribute("href", $"#{navId}")
                        .WithAttribute("aria-controls", navId)
                        .WithAttribute("jj-tabindex", index.ToString())
@@ -66,9 +69,6 @@ public class JJTabNav : HtmlComponent
                        .WithCssClass("jj-tab-link nav-link")
                        .WithCssClassIf(SelectedTabIndex == index && BootstrapHelper.Version > 3, "active")
                        .AppendText(nav.Title);
-
-                      if (nav.Icon.HasValue)
-                          a.AppendComponent(new JJIcon(nav.Icon.Value));
                   });
             });
         }
