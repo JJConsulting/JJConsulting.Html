@@ -57,8 +57,12 @@ public class JJTabNav : HtmlComponent
                   .Append(HtmlTag.A, a =>
                   {
                       if (nav.Icon.HasValue)
-                          a.AppendComponent(new JJIcon(nav.Icon.Value)).WithCssClass("me-1");
-                      
+                      {
+                          a.AppendComponent(new JJIcon(nav.Icon.Value)
+                          {
+                              CssClass = "me -1"
+                          });
+                      }
                       a.WithAttribute("href", $"#{navId}")
                        .WithAttribute("aria-controls", navId)
                        .WithAttribute("jj-tabindex", index.ToString())
